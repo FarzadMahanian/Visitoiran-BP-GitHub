@@ -1,0 +1,19 @@
+{% if content.field_map|render is not empty %}
+    <section class="map {{ class }}">
+        <div id="contacts">
+            <div id="google-map" class="{{ clazz }}" style="height: 430px;"></div>
+        </div>
+
+        {% set itemToGoogle = [] %}
+        {% for item in node.field_map %}
+            {% set itemToGoogle = itemToGoogle|merge([{
+            lat: item.lat,
+            lon: item.lon
+            }]) %}
+        {% endfor %}
+        {% include directory ~ '/templates/twigTemplates/simple.google.map.script.html.twig' with {
+        points : itemToGoogle,
+        travelMode: node.field_travel_mode.value
+        } %}
+    </section>
+{% endif %}

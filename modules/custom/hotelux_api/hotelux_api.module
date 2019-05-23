@@ -1,0 +1,63 @@
+<?php
+use Drupal\Core\Site\Settings;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
+function hotelux_api_getService($name) {
+    $services = [
+        'getHotelsList' => 'hotels'
+    ];
+
+    return $services[$name];
+}
+
+function hotelux_api_call($service, $json_request) {
+
+    $hotelux = Settings::get('hotelux');
+    if (!$hotelux['enabled']) {
+        return;
+    }
+
+    $config = [
+        'base_uri' => $hotelux['url'] . $hotelux['api'],
+        // TODO: set oauth authentication method
+        'auth' => ['username', 'password'],
+        'timeout' => $hotelux['timeout']
+    ];
+
+    $client = new Client($config);
+
+    try {
+        $request = $client->request('POST', $service, [
+            'json' => $json_request
+        ]);
+        return json_decode($request->getBody());
+    } catch (RequestException $e) {
+        watchdog_exception('hotelux_api', $e, $e->getMessage());
+    }
+
+}
+
+/**
+ * Implements MODULE_preprocess_HOOK().
+ */
+function hotelux_api_preprocess_node(&$variables) {
+    $node = $variables['node'];
+    if ($variables['view_mode'] != 'full') {
+        return;
+    }
+    $variables['hotelux_config'] = Settings::get('hotelux');
+    switch ($node->getTitle()) {
+        case 'Hotels':
+            $req = [
+                "arrivalDate" => "2017-01-20",
+                "departureDate" => "2017-01-23",
+                "destination" => "تهران",
+                "availabilityStatus" => "r",
+                "numberOfResults" => 10
+            ];
+            $variables['hotels'] = hotelux_api_call(hotelux_api_getService('getHotelsList'), $req);
+            break;
+    }
+
+}

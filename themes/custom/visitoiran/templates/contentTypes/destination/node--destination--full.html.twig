@@ -1,0 +1,143 @@
+{% set g = 0 %}
+<article{{ attributes }}>
+    <div class="content-wrapper destination with-quick-facts">
+
+        {#Main Picture & Quick Facts#}
+        <div class="gray">
+            <div class="content">
+                <div class="image">
+                    <div class="ui yellow ribbon label">
+                        <i class="hotel icon"></i> <a href="/hotel/all?destination={{ node.label }}" target="_blank">{{ 'See Hotels in' | t }} {{ node.label }}</a>
+                    </div>
+                    {{ content.field_image }}
+                </div>
+                <div class="quick-facts tac">
+                    <h1 class="bundle-title destination-title tac">
+                        {{ label }}
+                    </h1>
+                    {% if content.field_slogan|render is not empty %}
+                        <div class="slogan title-base-color">{{ content.field_slogan }}</div>
+                    {% endif %}
+
+                    <ul>
+                        {% if content.field_country|render is not empty %}
+                            <li>{{ content.field_country }}</li>
+                        {% endif %}
+
+                        {% if content.field_province|render is not empty %}
+                            <li>{{ content.field_province }}</li>
+                        {% endif %}
+
+                        {% if content.field_population|render is not empty %}
+                            {% include directory ~ '/templates/twigTemplates/field.item.label.html.twig' with {
+                            class : 'field--name-field-population',
+                            label : content.field_population['#title'],
+                            item : node.field_population.value|number_format
+                            } %}
+                        {% endif %}
+
+                        {% if content.field_area|render is not empty %}
+                            {% include directory ~ '/templates/twigTemplates/field.item.label.html.twig' with {
+                            class : 'field--name-field-area',
+                            label : content.field_area['#title'],
+                            item : node.field_area.value|format_area
+                            } %}
+                        {% endif %}
+
+                        {% if content.field_time_zone|render is not empty %}
+                            <li>{{ content.field_time_zone }}</li>
+                        {% endif %}
+
+                        {% if content.field_elevation|render is not empty %}
+                            {% include directory ~ '/templates/twigTemplates/field.item.label.html.twig' with {
+                            class : 'field--name-field-elevation',
+                            label : content.field_elevation['#title'],
+                            item : node.field_elevation.value|number_format
+                            } %}
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {#Image Galerry#}
+        {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' %}
+
+        {#Description Body#}
+        {% if node.body|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'title_name' : 'About',
+            'title_value' : node.title.value,
+            'body' : content.body,
+            'show_title' : true
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Packages#}
+        {% if related_packages|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/packages.teaser.html.twig' with {
+            packages : related_packages,
+            title : 'related packages',
+            gray : g,
+            content_class : 'min300'
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Map#}
+        {% include directory ~ '/templates/twigTemplates/map.html.twig' %}
+
+        {#Attractions#}
+        {% if attractions['#rows'] is not empty %}
+            {% include directory ~ '/templates/twigTemplates/view.full.teaser.small.html.twig' with {
+            view : attractions,
+            title : 'Sightseeing',
+            gray : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#History#}
+        {% if node.field_history|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'title_name' : 'history',
+            'body' : content.field_history,
+            'gray' : g,
+            'show_title' : true
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Author#}
+        {% if node.field_author|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'nobody' : true,
+            'body' : content.field_author,
+            'gray' : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Related#}
+        {% if node.field_related.getValue|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/related.html.twig' with {
+            'gray' : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Comments#}
+        {% if node.comment|length > 0 %}
+            <div id="comments-container">
+                {{ content.comment }}
+            </div>
+        {% endif %}
+
+    </div>
+
+    {#Hidden Inputs#}
+    <input type="hidden" id="photographer" value="{{ content.field_photographer[0]['#plain_text'] }}">
+
+</article>

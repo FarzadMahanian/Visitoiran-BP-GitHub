@@ -1,0 +1,163 @@
+{% set bgcolor = agency.bgColor %}
+{% set image_path = bp_config.url ~ bp_config.image_path %}
+<article{{ attributes }}>
+
+    <div class="content-wrapper full-main agency">
+
+        {#Main Picture & Quick Facts#}
+        <div class="gray" style="background-color: {{ bgcolor }}">
+            <div class="content main-header">
+                <div class="bg">
+                    <img src="{{ image_path }}{{ agency.banner.fileUploadedId }}?w=800&h=400&c=true" alt="{{ agency.title }}">
+                </div>
+                <div class="content">
+                    <h1 class="title tac">{{ agency.title }}</h1>
+                    <div class="tac logo">
+                        <img src="{{ image_path }}{{ agency.logo.fileUploadedId }}?{{ date().timestamp }}&w=100&h=100&c=true" alt="{{ agency.title }}">
+                    </div>
+
+                    <div class="box">
+                        <div class="website">{{ agency.contacts[0].sites[0] }}</div>
+                        <div class="email">{{ agency.contacts[0].emails[0] }}</div>
+                        <div class="phone">{{ agency.contacts[0].tells[0] }}</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {#Agency Menu#}
+        <div class="page-menu tac">
+            <ul>
+                <li><a href="#about-us">{{ 'ABOUT US' | t }}</a></li>
+                <li><a href="#our-services">{{ 'OUR SERVICES' | t }}</a></li>
+                <li><a href="#our-tours">{{ 'OUR TOURS' | t }}</a></li>
+                <li><a href="#contacts">{{ 'CONTACTS' | t }}</a></li>
+            </ul>
+        </div>
+
+        {#About Us#}
+        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+        'id' : 'about-us',
+        'title_name' : 'About Us',
+        'body' : agency.aboutUs,
+        'show_title' : true
+        } %}
+
+        {#Services#}
+        {% if agency.services is not empty %}
+            <div id="our-services" class="gray">
+                <div class="content render-view">
+                    <h1 class="title tac">
+                        {{ 'Our Services' | t }}
+                    </h1>
+                    <div class="mtb render-view">
+                        {% for service in agency.services %}
+                            {% if loop.first %}
+                                {% set width = 400 %}
+                            {% else %}
+                                {% set width = 215 %}
+                            {% endif %}
+                            {% set href = path('<front>') ~ 'agencyservice?service=' ~ service.groupId %}
+                            <div class="views-row">
+                                <article class="float-short first-wide">
+                                    <div class="image">
+                                        <a href="{{ href }}">
+                                            <img src="{{ image_path }}{{ service.logoId }}?{{ date().timestamp }}&w={{ width }}&h=215&c=true" alt="{{ service.title }}">
+                                        </a>
+                                    </div>
+                                    <div class="description" style="background-color: {{ bgcolor }}">
+                                        <h4><a href="{{ href }}">{{ service.title }}</a></h4>
+                                    </div>
+                                </article>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+        {#Packages#}
+        {% include directory ~ '/templates/twigTemplates/packages.teaser.html.twig' with {
+        packages : agency.packages,
+        id :'our-tours',
+        title : 'our tours',
+        content_class : 'render-view',
+        bgcolor : bgcolor
+        } %}
+
+        {#Description#}{#
+        {% if agency.description is not empty %}
+            <div class="gray">
+                <div class="content">
+                    <h1 class="title tac">
+                        {{ 'descriptions' | t }}
+                    </h1>
+                    <div class="vbody readmore">
+                        {% autoescape %}
+                            {{ agency.description|raw }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}#}
+
+        {#Contacts#}
+        {% if agency.contacts is not empty %}
+            {% if agency.contacts|length == 1 %}
+                {% set clazz = 'div2' %}
+                {% set content_clazz = 'content-padding' %}
+            {% else %}
+                {% set content_clazz = 'content' %}
+            {% endif %}
+
+            <div id="contacts" class="gray">
+                <div id="google-map" class="{{ clazz }}" style="height: 430px;"></div>
+                <div class="{{ clazz }} {{ content_clazz }}">
+                    <h1 class="title tac">
+                        {{ 'Contact Us' | t }}
+                    </h1>
+                    {% for contact in agency.contacts %}
+                        <div class="vbody readmore">
+                            <ul class="phone align-list">
+                                {% for phone in contact.tells %}
+                                    <li>{{ phone }}</li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="email align-list">
+                                {% for email in contact.emails %}
+                                    <li>{{ email }}</li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="address align-list">
+                                <li>{{ contact.address }}</li>
+                            </ul>
+                            <ul class="fax align-list">
+                                {% for fax in contact.faxes %}
+                                    <li>{{ fax }}</li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="website align-list">
+                                {% for website in contact.sites %}
+                                    <li>{{ website }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <hr/>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {#Map#}
+        {% include directory ~ '/templates/twigTemplates/google.map.script.html.twig' with {
+        points : agency.contacts,
+        container_id : 'google-map',
+        address : 'address'
+        } %}
+
+    </div>
+
+</article>

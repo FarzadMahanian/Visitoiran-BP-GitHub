@@ -1,0 +1,20 @@
+parameters:
+    hotelux.connections:
+        timeout: 20
+        hms:
+            enabled: true
+            namespace: 'hms'
+            url: 'http://178.62.252.62:8000/'
+            api: 'hms/api/v1/hotelux/'
+            services:
+                getHotels: 'hotels'
+                getHotel: 'hotelDetails' #{id}
+                autocomplete: 'autocomplete' #{text}
+
+services:
+    hotelux.web_service:
+        class: Drupal\hotelux\Services\WebService
+        arguments:
+            - '@keyvalue'
+            - '@logger.factory'
+            - '%hotelux.connections%'

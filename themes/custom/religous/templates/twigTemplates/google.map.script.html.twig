@@ -1,0 +1,56 @@
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsT0LEBibZ1Svifpe_vzbRNDIvOO7PIlk&libraries=places"></script>
+
+<script type="text/javascript">
+    var markers = [];
+
+    {% for c in points %}
+    markers.push({"lat": '{{ c.lat }}', "lng": '{{ c.lng }}', "address": '{{ attribute(c, address) }}'});
+    {% endfor %}
+
+    var mapCanvas = document.getElementById("{{ container_id }}");
+    var myCenter = new google.maps.LatLng(markers[0].lat, markers[0].lng);
+    var mapProp = {
+        center: myCenter,
+        zoom: 5,
+        panControl: false,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        overviewMapControl: false,
+        rotateControl: true,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var map = new google.maps.Map(mapCanvas, mapProp);
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+    var bounds = new google.maps.LatLngBounds();
+
+    for (i = 0; i < markers.length; i++) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
+            icon: {
+                url: "{{ base_path }}themes/custom/religous/app/images/pin.svg",
+                scaledSize: new google.maps.Size(30, 49),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(15, 45)
+            },
+            map: map
+        });
+
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            return function () {
+                infowindow.setContent(markers[i].address);
+                infowindow.open(map, marker);
+            }
+        })(marker, i));
+
+        bounds.extend(new google.maps.LatLng(markers[i].lat, markers[i].lng));
+    }
+    if (markers.length > 1) map.fitBounds(bounds); else map.setZoom(13);
+
+</script>

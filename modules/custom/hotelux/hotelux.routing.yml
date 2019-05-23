@@ -1,0 +1,29 @@
+getHotels:
+    path: /hotel/all
+    defaults:
+        _controller: Drupal\hotelux\Controller\HotelController::getHotels
+        _title: 'Hotels'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+getHotel:
+    path: /hotel/{id}
+    defaults:
+        _controller: Drupal\hotelux\Controller\HotelController::getHotel
+        _title: 'Hotel'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+autocomplete:
+    path: /hotel/autocomplete/{text}
+    defaults:
+        _controller: Drupal\hotelux\Controller\HotelController::autocomplete
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+

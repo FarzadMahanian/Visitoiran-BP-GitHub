@@ -1,0 +1,97 @@
+<article{{ attributes }}>
+    <div class="content-wrapper destination with-quick-facts">
+
+        {#Main Picture & Quick Facts#}
+        <div class="pattern">
+            <div class="content">
+                <div class="quick-facts-image">
+                    {{ content.field_image }}
+
+                    {#Image Galerry#}
+                    {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' with {
+                        short_class: 'short'
+                    } %}
+                </div>
+                <div class="quick-facts">
+                    <h1 class="title">{{ label }}</h1>
+                    <ul>
+                        {% if content.field_country|render is not empty %}
+                            <li>{{ content.field_country }}</li>
+                        {% endif %}
+
+                        {% if content.field_province|render is not empty %}
+                            <li>{{ content.field_province }}</li>
+                        {% endif %}
+
+                        {% if content.field_population|render is not empty %}
+                            {% include directory ~ '/templates/twigTemplates/field.item.label.html.twig' with {
+                            class : 'field--name-field-population',
+                            label : content.field_population['#title'],
+                            item : node.field_population.value|number_format
+                            } %}
+                        {% endif %}
+
+                        {% if content.field_area|render is not empty %}
+                            {% include directory ~ '/templates/twigTemplates/field.item.label.html.twig' with {
+                            class : 'field--name-field-area',
+                            label : content.field_area['#title'],
+                            item : node.field_area.value|format_area
+                            } %}
+                        {% endif %}
+
+                        {% if content.field_time_zone|render is not empty %}
+                            <li>{{ content.field_time_zone }}</li>
+                        {% endif %}
+
+                        {% if content.field_elevation|render is not empty %}
+                            {% include directory ~ '/templates/twigTemplates/field.item.label.html.twig' with {
+                            class : 'field--name-field-elevation',
+                            label : content.field_elevation['#title'],
+                            item : node.field_elevation.value|number_format
+                            } %}
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {#Description Body#}
+        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+        'title_name' : 'about',
+        'title_value' : node.title.value,
+        'body' : content.body,
+        'green': true,
+        'show_title' : true
+        } %}
+
+        {#Packages#}
+        {% include directory ~ '/templates/twigTemplates/packages.teaser.html.twig' with {
+        packages : related_packages,
+            title : 'related packages',
+            gray : true,
+            content_class : 'min300'
+        } %}
+
+        {#Attractions#}
+        {% include directory ~ '/templates/twigTemplates/view.full.teaser.small.html.twig' with {
+        view : attractions,
+        title : 'Sightseeing',
+        black: true
+        } %}
+
+        {#Map#}
+        {% include directory ~ '/templates/twigTemplates/map.html.twig' %}
+
+        {#History#}
+        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+        'title_name' : 'history',
+        'body' : content.field_history,
+        'green' : true,
+        'show_title' : true
+        } %}
+
+    </div>
+
+
+</article>

@@ -1,0 +1,53 @@
+{#
+/**
+ * @file
+ * Theme override to display a block.
+ *
+ * Available variables:
+ * - plugin_id: The ID of the block implementation.
+ * - label: The configured label of the block if visible.
+ * - configuration: A list of the block's configuration values.
+ *   - label: The configured label for the block.
+ *   - label_display: The display settings for the label.
+ *   - provider: The module or other provider that provided this block plugin.
+ *   - Block plugin specific settings will also be stored here.
+ * - content: The content of this block.
+ * - attributes: array of HTML attributes populated by modules, intended to
+ *   be added to the main container tag of this template.
+ *   - id: A valid HTML ID and guaranteed unique.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ *
+ * @see template_preprocess_block()
+ */
+#}
+<div class="front-section">
+  {% if label %}
+    <h1 class="title tac">{{ label }}</h1>
+  {% endif %}
+    <div class="scroll">
+        <ul id="tourism-interests-block">
+            <li tourism-id="112">{{ 'Leisure' | t }}</li>
+            <li tourism-id="113">{{ 'Cultural Heritage' | t }}</li>
+            <li tourism-id="114">{{ 'Rural' | t }}</li>
+            <li tourism-id="115">{{ 'Natural' | t }}</li>
+            <li tourism-id="116">{{ 'Health' | t }}</li>
+            <li tourism-id="117">{{ 'Sport' | t }}</li>
+            <li tourism-id="118">{{ 'Aquatic' | t }}</li>
+            <li tourism-id="119">{{ 'Grief' | t }}</li>
+            <li tourism-id="120">{{ 'War' | t }}</li>
+        </ul>
+    </div>
+
+    <div class="interest">
+        <div class="image"></div>
+        <div class="description">
+            <h2 class="title-text"></h2>
+            <div class="body"></div>
+        </div>
+    </div>
+</div>

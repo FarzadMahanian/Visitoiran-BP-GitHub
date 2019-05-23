@@ -1,0 +1,106 @@
+{% set image_path = bp_config.url ~ bp_config.image_path %}
+{% set package_path = url('<front>')['#markup'] ~ '/package' %}
+{% set packages = packages.response %}
+{% set image_path = 'asdas' %}
+
+<article class="content-wrapper gray">
+    <div class="content">
+        <h1 class="title tac">
+            {{ 'Tour Packages' | t }}
+        </h1>
+    </div>
+</article>
+<article id="packages-list">
+    {% if packages.content %}
+        <div class="doubling stackable four column ui grid container">
+            {% for package in packages.content %}
+                {#Package Cell#}
+                <div class="column">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <a class="mini ui primary button round" href="{{ package_path ~ '/' ~ package.id }}">{{ 'More Details' | t }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui top right attached label duration">
+                                    <h4>{{ package.duration }} {{ 'Days' | t }}</h4>
+                                </div>
+                                {% if package.logoId %}
+                                    <div class="package-logo" style="background-image: url('{{ base_path ~ 'direct/' ~ package.logoId }}')"></div>
+                                {% else %}
+                                    <div class="package-logo" style="background-image: url('{{ image_url ~ '/nophoto.svg' }}')"></div>
+                                {% endif %}
+                            </div>
+                            <div class="content">
+                                <a class="header" href="{{ package_path ~ '/' ~ package.id }}">{{ package.title }}</a>
+                                {% if package.itineraries %}
+                                    <div class="itineraries">
+                                        <div class="cities">
+                                            {% set currentCity = package.itineraries[0].city.name %}
+                                            <span class="city">{{ currentCity }}</span>
+                                            {% for city in package.itineraries %}
+                                                {% if currentCity != city.city.name %}
+                                                    {% set currentCity = city.city.name %}
+                                                    <span class="city">{{ city.city.name }}</span>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="extra price">
+                                <h4>{{ 'Start From' | t }}</h4>
+                                <h2>{{ package.minPrice|number_format }} {{ package.currency | t }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if packages.totalElements > 12 %}
+                <div class="ui center aligned row pt40">
+                    <div class="ui pagination menu pagination-package">
+                        {% if packages.first %}
+                            {% set firstPage = 'disabled' %}
+                        {% else %}
+                            {% set firstPage = '' %}
+                        {% endif %}
+                        <a class="icon item {{ firstPage }}" href="{{ package_path ~ '/all?page='}}{{ packages.number - 1 }}">
+                            <i class="left chevron icon"></i>
+                        </a>
+
+                        {% set item = 0 %}
+                        {% for item in 1..packages.totalPages %}
+                            {% if loop.index0 == packages.number %}
+                                {% set class = 'active' %}
+                            {% else %}
+                                {% set class = '' %}
+                            {% endif %}
+                            <a class="item {{ class }}" href="{{ package_path ~ '/all?page=' ~ loop.index0 }}">{{ loop.index }}</a>
+                        {% endfor %}
+
+                        {% if packages.number == packages.totalPages - 1 %}
+                            {% set lastPage = 'disabled' %}
+                        {% else %}
+                            {% set lastPage = '' %}
+                        {% endif %}
+                        <a class="icon item {{ lastPage }}" href="{{ package_path ~ '/all?page='}}{{ packages.number + 1 }}">
+                            <i class="right chevron icon"></i>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="error-packages package-not-found">
+            <div class="content">
+                <div class="header">{{ 'Whoops!' | t }}</div>
+                <div class="message">{{ 'No Result to Show' | t }}</div>
+                <a class="ui primary button tiny round" href="/">{{ 'HOME' | t }}</a>
+            </div>
+        </div>
+    {% endif %}
+</article>

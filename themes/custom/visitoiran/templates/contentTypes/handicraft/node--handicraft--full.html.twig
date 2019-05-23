@@ -1,0 +1,65 @@
+{% set g = 0 %}
+<article{{ attributes }}>
+
+    <div class="content-wrapper full-main">
+
+        {#Main Picture#}
+        <div class="gray">
+            <div class="content main-title tac">
+                {{ content.field_image }}
+                <h1 class="title tac">{{ label }}</h1>
+            </div>
+        </div>
+
+        {#Image Galerry#}
+        {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' %}
+
+        {#Description Body#}
+        {% for b in node.body %}
+            {% set show_title = false %}
+
+            {% if loop.index == 1 %}
+                {% set show_title = true %}
+            {% endif %}
+
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'title_value' : node.title.value,
+            'body' :  b.value,
+            'body_class' : 'h2-bold',
+            'gray' : g,
+            'show_title' : show_title
+            } %}
+            {% set g = g + 1 %}
+        {% endfor %}
+
+        {#Author#}
+        {% if node.field_author|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'nobody' : true,
+            'body' : content.field_author,
+            'gray' : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Related#}
+        {% if node.field_related.getValue|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/related.html.twig' with {
+            'gray' : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Comments#}
+        {% if node.comment|length > 0 %}
+            <div id="comments-container">
+                {{ content.comment }}
+            </div>
+        {% endif %}
+
+    </div>
+
+    {#Hidden Inputs#}
+    <input type="hidden" id="photographer" value="{{ content.field_photographer[0]['#plain_text'] }}">
+
+</article>

@@ -1,0 +1,92 @@
+<?php
+use Drupal\views\Views;
+
+function renderView($viewName, $args, $items_per_page = 4, $block_name = 'block_1') {
+    $view = Views::getView($viewName);
+    $view->setArguments($args);
+    $view->setDisplay($block_name);
+    $view->setItemsPerPage($items_per_page);
+    $view->preExecute();
+    $view->execute();
+    return $view->render();
+}
+
+function collectIds($collection, $name) {
+    $tagIds = $collection->getFieldCollectionItem()->get($name);
+    $ids = [];
+    for ($i = 0; $i < count($tagIds); $i++) {
+        $ids[] = $tagIds[$i]->getValue()['target_id'];
+    }
+    return implode(',', $ids);
+}
+
+/**
+ * Implements MODULE_preprocess_HOOK().
+ */
+function node_relations_preprocess_node(&$variables) {
+    $node = $variables['node'];
+    if ($variables['view_mode'] != 'full') {
+        return;
+    }
+    switch ($node->bundle()) {
+        case 'destination':
+            if (empty($node->field_code->value)) {
+                return;
+            }
+            $variables['attractions'] = renderView('attraction_of_destination', array($node->field_code->value));
+            break;
+
+        case 'attraction':
+            if (empty($node->field_code->value)) {
+                return;
+            }
+            $variables['destinations'] = renderView('destination_of_attraction', array($node->field_code->value));
+            break;
+
+        case 'static_page':
+            if (empty($node->field_view_name->value)) {
+                return;
+            }
+            $items_per_page = NULL;
+            if (!empty($node->field_view_count->value)) {
+                $items_per_page = $node->field_view_count->value;
+            }
+            $variables['staticView'] = renderView($node->field_view_name->value, array(), $items_per_page);
+            break;
+
+        case 'gardi':
+            $collections = $node->field_collection;
+            for ($i = 0; $i < count($collections); $i++) {
+                $collection = $collections[$i];
+
+                if (!empty($collection->getFieldCollectionItem()->get('field_four_wide_tags'))) {
+                    $renderedView = renderView('rnd', array(collectIds($collection, 'field_four_wide_tags')));
+                    if (!empty($renderedView['#view']->result)) {
+                        $variables['collection'][$i]['fourIds'] = $renderedView['#view']->result;
+                    }
+                }
+
+                if (!empty($collection->getFieldCollectionItem()->get('field_related_tags'))) {
+                    $renderedView = renderView('rnd', array(collectIds($collection, 'field_related_tags')));
+                    if (!empty($renderedView['#view']->result)) {
+                        $variables['collection'][$i]['relatedIds'] = $renderedView['#view']->result;
+                    }
+                }
+
+                if (!empty($collection->getFieldCollectionItem()->get('field_interest_tags'))) {
+                    $renderedView = renderView('rnd', array(collectIds($collection, 'field_interest_tags')));
+                    if (!empty($renderedView['#view']->result)) {
+                        $variables['collection'][$i]['interestIds'] = $renderedView['#view']->result;
+                    }
+                }
+
+                if (!empty($collection->getFieldCollectionItem()->get('field_full_screen_tags'))) {
+                    $renderedView = renderView('rnd', array(collectIds($collection, 'field_full_screen_tags')));
+                    if (!empty($renderedView['#view']->result)) {
+                        $variables['collection'][$i]['fullIds'] = $renderedView['#view']->result;
+                    }
+                }
+            }
+            break;
+    }
+}

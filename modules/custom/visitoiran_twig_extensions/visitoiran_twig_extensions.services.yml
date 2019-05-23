@@ -1,0 +1,5 @@
+services:
+  format_area.twig_extension:
+    class: Drupal\visitoiran_twig_extensions\TwigExtension\VisitoFilters
+    tags:
+      - { name: twig.extension }

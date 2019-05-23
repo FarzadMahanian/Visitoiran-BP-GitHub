@@ -1,0 +1,10 @@
+{% if content.field_map|render is not empty %}
+    <div class="gray">
+        <div class="content">
+            <h1 class="title">{{ 'Google Map' | t }}</h1>
+            <div class="map {{ class }}">
+                {{ content.field_map }}
+            </div>
+        </div>
+    </div>
+{% endif %}

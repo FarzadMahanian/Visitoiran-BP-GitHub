@@ -1,0 +1,11 @@
+<div{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+    {% if label %}
+        <h2{{ title_attributes }}>{{ label }}</h2>
+        <span><a class="see-all" href="{{ url('<front>') }}{{ name }}">{{ 'See All' | t }}</a></span>
+    {% endif %}
+    {{ title_suffix }}
+    {% block content %}
+        {{ content }}
+    {% endblock %}
+</div>

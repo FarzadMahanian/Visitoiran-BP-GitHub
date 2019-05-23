@@ -1,0 +1,474 @@
+{% set g = 0 %}
+{% set package= {
+id: 31,
+name: "Tour Iran gardy",
+duration: 7,
+code: "TP1234567",
+overview: "Explore the historical attractions in Turkey during this 7-day Turkey tour that begins and ends in Istanbul. You will traverse Istanbul with an expert guide aboard a comfortable air-conditioned coach to visit the poignant battlegrounds of Gallipoli, the mesmerizing Roman-Greco remnants of Ephesus, and the other-worldly geology in Cappadocia. Along the way stop at Pamukkale to marvel at the cream colored rock plateaus, take a dip in the hot Hierapolis natural springs and discover the history of Troy. Enjoy the peace of mind of six nights accommodation and daily breakfast and dinner meals, all included and planned for your convenience.",
+description: "Your tour stops in four centrally located destinations for overnight accommodation and your convenience. Stay overnight in Çanakkale, spend a pair of nights in Kusadasi, one overnight in Pamukkale, and two evenings in Cappadocia. Enjoy plenty of leisure time to discover each city on your own. Meals are simple too, both breakfast and dinner are included at all hotels and time will be set aside for lunch everyday (own expense).",
+cancellationPolicy: "If you cancel at least 7 day(s) in advance of the scheduled departure, there is no cancellation fee. If you cancel between 3 and 6 day(s) in advance of the scheduled departure, there is a 50 percent cancellation fee. If you cancel within 2 day(s) of the scheduled departure, there is a 100 percent cancellation fee.",
+sightseeing: "Complete Operator information, including local telephone numbers at your destination, are included on your Confirmation Voucher. Our Product Managers select only the most experienced and reliable operators in each destination, removing the guesswork for you, and ensuring your peace of mind.",
+tourService: "Delve into Turkey’s classic and heritage rich sites on your 7-day journey starting and ending in Istanbul. Enjoy a convenient pickup and travel the Turkish countryside aboard an air-conditioned coach with your expert guide.  For anyone interested in a unique and efficient trip to Turkey's cultural highlights, this tour is certainly not to be missed.",
+itineraries: [
+{
+name: "Tehran",
+order: 1,
+country: {
+id: 1,
+name: "Iran",
+},
+city: {
+id: 1,
+name: "Tehran"
+},
+lat: "35.6894997",
+long: "51.3513441",
+day: 1,
+description: "Tehran is the capital of Iran, in the north of the country. Its central Golestan Palace complex, with its ornate rooms and marble throne, was the seat of power of the Qajar dynasty. The National Jewelry Museum holds many of the Qajar monarchs’ jewels, while the National Museum of Iran has artifacts dating back to Paleolithic times. The Milad Tower offers panoramic views over the city."
+},
+{
+name: "Shiraz",
+order: 2,
+country: {
+id: 1,
+name: "Iran",
+},
+city: {
+id: 2,
+name: "Shiraz"
+},
+lat: "29.6655016",
+long: "52.3928847",
+day: 2,
+description: "Shiraz is a city in south-central Iran, known for its literary history and many gardens. The marble Tomb of Hafez, honoring the revered poet, sits within its own garden. To the east, the Mausoleum of Saadi houses the 13th-century writer’s mosaic-tiled tomb and an underground pool. Shiraz is a gateway to Persepolis, the ruined 6th-century-B.C. capital to the northeast, with its immense gateways, columns and friezes."
+},
+{
+name: "Kerman",
+order: 3,
+country: {
+id: 1,
+name: "Iran",
+},
+city: {
+id: 2,
+name: "Kerman"
+},
+lat: "30.2730323",
+long: "56.9962101",
+day: 3,
+description: "Kerman is the capital city of Kerman Province, Iran. At the 2011 census, its population was 821,374, in 221,389 households, making it the 10th most populous city of Iran."
+}
+],
+hotelPackageDates: [
+{
+startDate: "1493721580283",
+hotelPackages: [
+{
+hotels: ["Azadi", "Ferdosi", "Evin"],
+star: 4,
+isTop: true,
+boardType: "BB",
+isAvailable: true,
+hotelPackageRooms: [
+{
+roomType: "Double",
+price: 300
+},
+{
+roomType: "Single",
+price: 250
+},
+{
+roomType: "Child with Bed",
+price: 200
+},
+{
+roomType: "Child without Bed",
+price: 150
+}
+]
+},
+{
+hotels: ["Engelab", "Laleh", "Shandiz"],
+star: 3,
+isTop: true,
+boardType: "All",
+isAvailable: false,
+hotelPackageRooms: [
+{
+roomType: "Double",
+price: 300
+},
+{
+roomType: "Single",
+price: 250
+},
+{
+roomType: "Child with Bed",
+price: 200
+},
+{
+roomType: "Child without Bed",
+price: 150
+}
+]
+},
+{
+hotels: ["Engelab", "Laleh", "Shandiz"],
+star: 2,
+isTop: true,
+boardType: "BB",
+isAvailable: true,
+hotelPackageRooms: [
+{
+roomType: "Double",
+price: 300
+},
+{
+roomType: "Single",
+price: 250
+},
+{
+roomType: "Child with Bed",
+price: 200
+},
+{
+roomType: "Child without Bed",
+price: 150
+}
+]
+}
+]
+},
+{
+startDate: "1491131544260",
+hotelPackages: [
+{
+hotels: ["Azadi", "Ferdosi", "Evin"],
+star: 4,
+isTop: true,
+boardType: "All",
+isAvailable: true,
+hotelPackageRooms: [
+{
+roomType: "Double",
+price: 300
+},
+{
+roomType: "Single",
+price: 250
+},
+{
+roomType: "Child with Bed",
+price: 200
+}
+]
+},
+{
+hotels: ["Engelab", "Laleh", "Shandiz"],
+star: 3,
+isTop: true,
+boardType: "BB",
+isAvailable: false,
+hotelPackageRooms: [
+{
+roomType: "Double",
+price: 300
+},
+{
+roomType: "Single",
+price: 250
+},
+{
+roomType: "Child with Bed",
+price: 200
+}
+]
+}
+]
+}
+]
+} %}
+
+<article id="packages-details">
+    {#Main Picture & Informations#}
+    <section class="package-info">
+        <div class="title-color package-title">
+            <h1 class="title tac">{{ package.name }}</h1>
+        </div>
+        <div class="gray-darker ptb40">
+            <div class="doubling stackable two column ui grid container">
+                {#Image Gallery#}
+                <div class="column">
+                    <div class="field--name-field-image package-pictures">
+                        <img class="picture" src="http://lorempixel.com/600/350/city/{{ random(10)|round }}">
+                        <img class="picture" src="http://lorempixel.com/600/350/city/{{ random(10)|round }}">
+                        <img class="picture" src="http://lorempixel.com/600/350/city/{{ random(10)|round }}">
+                        <img class="picture" src="http://lorempixel.com/600/350/city/{{ random(10)|round }}">
+                        <img class="picture" src="http://lorempixel.com/600/350/city/{{ random(10)|round }}">
+                        <img class="picture" src="http://lorempixel.com/600/350/city/{{ random(10)|round }}">
+                    </div>
+                </div>
+
+                {#Package Informations#}
+                <div class="column">
+                    <div class="extre-info">
+                        <div class="quick-facts">
+                            <ul>
+                                {% if package.duration %}
+                                    <li>
+                                        <div class="field field--name-field-time-zone field--label-above">
+                                            <div class="field__label">{{ 'Duration' | t }}</div>
+                                            <div class="field__item">{{ package.duration }} {{ 'Days' | t }}</div>
+                                        </div>
+                                    </li>
+                                {% endif %}
+
+                                <li>
+                                    <div class="field field--name-field-country field--label-above">
+                                        <div class="field__label">{{ 'Country' | t }}</div>
+                                        <div class="field__item">{{ 'Iran' | t }}</div>
+                                    </div>
+                                </li>
+
+                                {% if package.code %}
+                                    <li>
+                                        <div class="field field--name-field-barcode field--label-above">
+                                            <div class="field__label">{{ 'Code' | t }}</div>
+                                            <div class="field__item">{{ package.code }}</div>
+                                        </div>
+                                    </li>
+                                {% endif %}
+
+                                {% if package.itineraries %}
+                                    <li>
+                                        <div class="field field--name-field-area field--label-above">
+                                            <div class="field__label">{{ 'Destinations' | t }}</div>
+                                            <div class="field__item">
+                                                {% for itinerary in package.itineraries %}
+                                                    <span class="destinations">{{ itinerary.city.name }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    {#Hotel Package Dates Body#}
+    {% if package.hotelPackageDates %}
+        <section class="hotel-package-dates tab-menu {{ (g is odd) ? 'gray' : '' }}">
+            <div class="ui container">
+                <h1 class="title tac">
+                    {{ 'Start Date' | t }}
+                </h1>
+                <div class="ui pointing secondary menu">
+                    {% for hotelPackageDate in package.hotelPackageDates %}
+                        <a class="item {{ (loop.index) == 1 ? 'active' : '' }}" data-tab="tab{{ loop.index }}">
+                            <button class="ui button mini">
+                                {{ hotelPackageDate.startDate | date("m/d/Y", false) }}
+                            </button>
+                        </a>
+                    {% endfor %}
+                </div>
+
+                {% for hotelPackageDate in package.hotelPackageDates %}
+                    <div class="ui tab segment  {{ (loop.index) == 1 ? 'active' : '' }}" data-tab="tab{{ loop.index }}">
+                        <table class="ui celled padded table">
+                            <thead class="hidden-mobile">
+                            <tr>
+                                <th class="ui center aligned">{{ 'Hotel' | t }}</th>
+                                <th class="ui center aligned">{{ 'Type' | t }}</th>
+                                <th class="ui center aligned">{{ 'Stars' | t }}</th>
+                                {% for room in hotelPackageDate.hotelPackages[0].hotelPackageRooms %}
+                                    <th class="ui center aligned">{{ room.roomType }}</th>
+                                {% endfor %}
+                                <th class="ui center aligned">{{ 'Check Availability' | t }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for hotelPackage in hotelPackageDate.hotelPackages %}
+                                <tr>
+                                    <td class="ui center aligned">
+                                        <strong class="show-mobile">{{ 'Hotel' | t }}</strong>
+                                        {% for hotel in hotelPackage.hotels %}
+                                            <span class="package-hotel">
+                                                {{ hotel }}
+                                            </span>
+                                        {% endfor %}
+                                    </td>
+                                    <td class="ui center aligned">
+                                        <strong class="show-mobile">{{ 'Type' | t }}</strong>
+                                        {{ hotelPackage.boardType }}
+                                    </td>
+                                    <td class="ui center aligned">
+                                        <div class="ui star rating" data-rating="{{ hotelPackage.star }}" data-max-rating="5"></div>
+                                    </td>
+                                    {% for room in hotelPackage.hotelPackageRooms %}
+                                        <td class="ui center aligned">
+                                            <strong class="show-mobile">{{ room.roomType }}</strong>
+                                            {{ room.price }}$
+                                        </td>
+                                    {% endfor %}
+                                    <td class="center aligned check-availability">
+                                        {% if (hotelPackage.isAvailable) %}
+                                            <a class="ui image label blue">
+                                                <i class="checkmark icon"></i>
+                                                <div class="detail check">{{ 'Check' | t }}</div>
+                                            </a>
+                                        {% else %}
+                                            <span class="ui image label">
+                                                <i class="remove icon"></i>
+                                                <div class="detail">{{ 'Not Available' | t }}</div>
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% set g = g + 1 %}
+    {% endif %}
+
+    {#Overview Body#}
+    {% if package.description %}
+        <section class="overview {{ (g is odd) ? 'gray' : '' }}">
+            <div class="ui container">
+                {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                'title_name' : 'Overview',
+                'body' : package.overview,
+                'gray' : false,
+                'show_title' : true,
+                'title_class': 'full-bottom-border no-line-under',
+                'icon_name': "book icon"
+                } %}
+            </div>
+        </section>
+        {% set g = g + 1 %}
+    {% endif %}
+
+    {#Description Body#}
+    {% if package.description %}
+        <section class="description {{ (g is odd) ? 'gray' : '' }}">
+            <div class="ui container">
+                {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                'title_name' : 'Descriptions',
+                'body' : package.description,
+                'gray' : false,
+                'show_title' : true,
+                'title_class': 'full-bottom-border no-line-under',
+                'icon_name': "book icon"
+                } %}
+            </div>
+        </section>
+        {% set g = g + 1 %}
+    {% endif %}
+
+    {#Cancellation Policy Body#}
+    {% if package.cancellationPolicy %}
+        <section class="cancellation-policy {{ (g is odd) ? 'gray' : '' }}">
+            <div class="ui container">
+                {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                'title_name' : 'Cancellation Policy',
+                'body' : package.cancellationPolicy,
+                'gray' : false,
+                'show_title' : true,
+                'title_class': 'full-bottom-border no-line-under',
+                'icon_name': 'delete calendar icon'
+                } %}
+            </div>
+        </section>
+        {% set g = g + 1 %}
+    {% endif %}
+
+    {#Sightseeing Body#}
+    {% if package.sightseeing %}
+        <section class="sightseeing {{ (g is odd) ? 'gray' : '' }}">
+            <div class="ui container">
+                {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                'title_name' : 'Sightseeing',
+                'body' : package.sightseeing,
+                'gray' : false,
+                'show_title' : true,
+                'title_class': 'full-bottom-border no-line-under',
+                'icon_name': 'bicycle icon'
+                } %}
+            </div>
+        </section>
+        {% set g = g + 1 %}
+    {% endif %}
+
+    {#Tour Service Policy Body#}
+    {% if package.tourService %}
+        <section class="tout-service {{ (g is odd) ? 'gray' : '' }}">
+            <div class="ui container">
+                {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                'title_name' : 'Tour Service',
+                'body' : package.tourService,
+                'gray' : false,
+                'show_title' : true,
+                'title_class': 'full-bottom-border no-line-under',
+                'icon_name': 'shopping bag icon'
+                } %}
+            </div>
+        </section>
+        {% set g = g + 1 %}
+    {% endif %}
+
+    {#Map#}
+    <section class="map">
+        <div id="contacts">
+            <div id="google-map" class="{{ clazz }}" style="height: 430px;"></div>
+        </div>
+
+        {% include directory ~ '/templates/twigTemplates/google.map.script.html.twig' with {
+        points : package.itineraries,
+        container_id : 'google-map',
+        address : 'title',
+        'title_class': 'full-bottom-border'
+        } %}
+    </section>
+
+    {#Itineraries#}
+    <section class="itineraries">
+        <div>
+            {% embed directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'title_name' : 'Itineraries',
+            'show_title' : true,
+            'readmore_class': "no-readmode"
+            } %}
+                {% block body %}
+                    <ul class="itinerary">
+                        {% for itinerary in package.itineraries %}
+                            <li class="itinerary-item">
+                                {% autoescape %}
+                                    <div class="header">
+                                        <span class="ui ribbon second label">{{ 'Day' | t }} {{ itinerary.day }}</span>
+                                        <h2 class="title">{{ itinerary.name }}</h2>
+                                    </div>
+                                    <div class="description">
+                                        <p class="pt20">
+                                            {{ itinerary.description|raw }}
+                                        </p>
+                                    </div>
+                                {% endautoescape %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </section>
+</article>

@@ -1,0 +1,272 @@
+
+<article{{ attributes }}>
+    <div class="gray" style="overflow: visible">
+        <div class="ui form hotel-filter-top filter-wrapper">
+            <div class="four fields">
+                <div class="four wide field filter-row hotel-row">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="{{ 'Search Hotels' | t }}">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+                <div class="five wide field filter-row date-row">
+                    <div class="two fields">
+                        <div class="field" style="width: 50% !important; margin:0;">
+                            <div class="ui icon input">
+                                <input type="text" readonly="readonly" class="vesta-dp" placeholder="{{ 'Check-In' | t }}">
+                                <i class="calendar icon"></i>
+                            </div>
+                        </div>
+                        <div class="field" style="width: 50% !important; margin:0;">
+                            <div class="ui icon input">
+                                <input type="text" readonly="readonly" class="vesta-dp" placeholder="{{ 'Check-Out' | t }}">
+                                <i class="calendar icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="five wide field filter-row room-row">
+                    <div class="field">
+                        <div class="ui right icon input room-detail">
+                            <input class="room-field" readonly="readonly" type="text" placeholder="{{ 'Rooms' | t }}">
+                            <i class="users icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="two wide field filter-row button-row">
+                    <div class="field">
+                        <button class="ui teal fluid button" type="submit">{{ 'Search' | t }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hotel-list-page">
+        <div class="ui stackable two column grid">
+            <div class="four wide column filters">
+                <h1 class="title with-no-border">{{ "Filters" | t }}</h1>
+                <form id="hotel-filter" class="ui form">
+                    <div class="ui styled fluid accordion">
+                        <div class="title active">
+                            <i class="dropdown icon"></i>
+                            {{ 'Stars' | t }}
+                        </div>
+                        <div class="content active">
+                            <div class="grouped fields">
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="1">
+                                        <label>
+                                            <div class="stars">
+                                                <div class="ui star rating" data-rating="1" data-max-rating="5"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="2">
+                                        <label>
+                                            <div class="stars">
+                                                <div class="ui star rating" data-rating="2" data-max-rating="5"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="3">
+                                        <label>
+                                            <div class="stars">
+                                                <div class="ui star rating" data-rating="3" data-max-rating="5"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="4">
+                                        <label>
+                                            <div class="stars">
+                                                <div class="ui star rating" data-rating="4" data-max-rating="5"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="5">
+                                        <label>
+                                            <div class="stars">
+                                                <div class="ui star rating" data-rating="5" data-max-rating="5"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="title">
+                            <i class="dropdown icon"></i>
+                            {{ 'Facilities' | t }}
+                        </div>
+                        <div class="content">
+                            <div class="grouped fields">
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="1">
+                                        <label>{{ 'Free WIFI' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="2">
+                                        <label>{{ 'Parking' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="3">
+                                        <label>{{ 'Sauna' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="4">
+                                        <label>{{ 'Indoor Pool All Year' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="5">
+                                        <label>{{ 'Coffee shop' | t }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="title">
+                            <i class="dropdown icon"></i>
+                            {{ 'Style (Hotel Type)' | t }}
+                        </div>
+                        <div class="content">
+                            <div class="grouped fields">
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="1">
+                                        <label>{{ 'Apartment Hotel' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="2">
+                                        <label>{{ 'Eco Hotel' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="3">
+                                        <label>{{ 'Motel' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="4">
+                                        <label>{{ 'Garden Hotel' | t }}</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="5">
+                                        <label>{{ 'Guest House' | t }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" pt20">
+                        <button class="ui button teal basic fluid round" type="submit">{{ 'Filter' | t }}</button>
+                    </div>
+                </form>
+            </div>
+            <script type="text/javascript">
+                $('#hotel-filter').submit(function () {
+                    return false;
+                })
+            </script>
+
+            <div class="twelve wide column hotels">
+                <h1 class="title with-no-border">{{ "Hotels' List" | t }}</h1>
+                {% if hotels.response.Hotels %}
+                    <ul>
+                        {% for hotel in hotels.response.Hotels %}
+                            <li class="clearfix">
+                                <div class="description">
+                                    <div class="info-box">
+                                        {% if hotel.ThumbnailUrl %}
+                                            <a href="/hotel/{{ hotel.HotelId }}">
+                                                <div class="image" style="background-image: url('{{ hotel.ThumbnailUrl }}')"></div>
+                                            </a>
+                                        {% else %}
+                                            <div class="image" style="background-image: url('{{ image_url ~ "nophoto.svg" }}')"></div>
+                                        {% endif %}
+                                        {% if hotel.Name %}
+                                            <a href="/hotel/{{ hotel.HotelId }}">
+                                                <h2 class="simple-title pt10">{{ hotel.Name }}</h2>
+                                            </a>
+                                        {% endif %}
+                                        {% if hotel.HotelStar %}
+                                            <div class="stars">
+                                                <div class="ui star rating" data-rating="{{ hotel.HotelStar }}" data-max-rating="5"></div>
+                                            </div>
+                                        {% endif %}
+                                        <div class="headline">
+                                            {% if hotel.HeadLine %}
+                                                {{ hotel.HeadLine }}
+                                            {% endif %}
+                                        </div>
+                                        {% if hotel.GeneralInfo %}
+                                            <div class="general-info">{{ hotel.GeneralInfo }}</div>
+                                        {% endif %}
+                                        {% if hotel.Address %}
+                                            <div class="location"><p>{{ hotel.Address }}</p></div>
+                                        {% endif %}
+                                        {% if hotel.GuestRate > 0 %}
+                                            <div class="rate">
+                                                <div>{{ 'Rate' }}</div>
+                                                <div>{{ hotel.GuestRate|round(1) }}</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="last-section">
+                                    {% if hotel.MinPrice > 0 %}
+                                        <div class="price-box">
+                                            <div class="text">{{ 'Price Per Night' | t }} ({{ 'From' | t }}):</div>
+                                            <div class="value"><strong>{{ hotel.MinPrice | number_format }} {{ hotel.RateCurrencyCode }}</strong></div>
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="hotel-check-btn">
+                                        <a href="/hotel/{{ hotel.HotelId }}" class="mini fluid teal ui button round">{{ 'Check Availability' | t }}</a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="no-result-found p30">
+                        <div class="ui center aligned container">
+                            <div class="header">
+                                {{ 'There is no Hotel found!' | t }}
+                            </div>
+                            <div class="message">
+                                {{ 'Please try again' }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</article>

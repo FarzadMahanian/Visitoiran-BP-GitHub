@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * Theme override for a branding block.
+ *
+ * Each branding element variable (logo, name, slogan) is only available if
+ * enabled in the block configuration.
+ *
+ * Available variables:
+ * - site_logo: Logo for site as defined in Appearance or theme settings.
+ * - site_name: Name for site as defined in Site information settings.
+ * - site_slogan: Slogan for site as defined in Site information settings.
+ */
+#}
+
+<div class="user-info-block">
+    <div class="ui right dropdown">
+        <div class="custom-user-icon"></div>
+        <div class="menu">
+            {% if visitoiran.userInfo.response.userName %}
+                <div class="ui message cards">
+                    <div class="card">
+                        <div class="content">
+                            <i class="user icon right floated big image"></i>
+                            <div class="header">
+                                {{ visitoiran.userInfo.response.userName }}
+                            </div>
+                            <div class="meta">
+                                {{ visitoiran.userInfo.response.title }}. {{ visitoiran.userInfo.response.firstName }} {{ visitoiran.userInfo.response.surname }}
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <div class="ui container center aligned">
+                                <a href="{{ url('<front>')['#markup'] ~ '/package/home' }}" class="ui basic primary mini button">{{ 'Log Out' | t }}</a>
+                            </div>
+                            <div class="ui container center aligned pt10">
+                                <a href="http://panel.visitoiran.com/">{{ 'Log In as an Agency' | t }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="ui message warning cards">
+                    <div class="card">
+                        <div class="content">
+                            <div class="header">
+                                {{ 'You are not Log In!' | t }}
+                            </div>
+                            <div class="meta">
+                                {{ 'You must be Log In.' | t }}
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <div class="ui container center aligned">
+                                <a href="{{ url('<front>')['#markup'] ~ '/package/home' }}" class="ui basic primary mini button">Log In</a>
+                            </div>
+                            <div class="ui container center aligned pt10">
+                                <a href="http://panel.visitoiran.com/">{{ 'Log In as an Agency' | t }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

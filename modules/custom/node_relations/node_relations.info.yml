@@ -1,0 +1,5 @@
+name: Node Relations
+type: module
+description: Attach nodes and entity to each other.
+core: 8.x
+package: Custom

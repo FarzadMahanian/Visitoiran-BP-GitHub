@@ -1,0 +1,48 @@
+<?php
+function hubber_theme($existing, $type, $theme, $path) {
+    $language_id = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $host_path = \Drupal::request()->getScheme() . '://' . \Drupal::request()->getHost();
+    $base_path = $host_path;
+    $base_path .= DIRECTORY_SEPARATOR;
+    $image_path = $base_path . 'themes/custom/visitoiran/app/images/';
+    if ($language_id != 'en') {
+        $base_path .= $language_id . DIRECTORY_SEPARATOR;
+    }
+    $visitoiran = NULL;
+    if (!empty(\Drupal\hubber\Controller\Session::get('visitoiran'))) {
+        $visitoiran = \Drupal\hubber\Controller\Session::get('visitoiran');
+    }
+    $default_variables = [
+        'host_path' => $host_path,
+        'base_path' => $base_path,
+        'language_id' => $language_id,
+        'image_url' => $image_path,
+        'visitoiran' => $visitoiran,
+        'messages' => drupal_get_messages()
+    ];
+    return [
+        'packages' => [
+            'variables' => array_merge($default_variables, ['packages' => NULL])
+        ],
+        'package' => [
+            'variables' => array_merge($default_variables, ['package' => NULL])
+        ],
+        'payment' => [
+            'variables' => array_merge($default_variables, ['payment' => NULL])
+        ],
+        'loginPage' => [
+            'variables' => array_merge($default_variables, ['loginPage' => NULL, 'searchTerms' => NULL])
+        ],
+        'userHome' => [
+            'variables' => array_merge($default_variables, ['profile' => NULL, 'booklist' => NULL, 'searchTerms' => NULL])
+        ]
+    ];
+}
+
+function hubber_preprocess(array &$variables, $hook) {
+
+    if ($hook == 'loginPage') {
+        $variables['visito_message'] = drupal_get_messages();
+    }
+
+}

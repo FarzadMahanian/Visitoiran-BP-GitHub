@@ -1,0 +1,265 @@
+{% set g = 0 %}
+<article{{ attributes }}>
+
+    <div class="content-wrapper full-main gardi-page">
+
+        {#Main Picture#}
+        {% if content.field_image|render is empty %}
+            {% set back_cls = 'title-color' %}
+            {% set content_cls = 'main-title tac p30' %}
+            <div class="{{ back_cls }}">
+                <div class="{{ content_cls }}">
+                    <h1 class="title tac">
+                        {{ label }}
+                        {% if content.field_slogan|render is not empty %}
+                            <div class="slogan">{{ content.field_slogan }}</div>
+                        {% endif %}
+                    </h1>
+                </div>
+            </div>
+        {% else %}
+            {% set content_cls = 'gardi-page-main-picture pb20' %}
+            <h1 class="title tac" style="display: none">
+                {{ label }}
+                {% if content.field_slogan|render is not empty %}
+                    <div class="slogan">{{ content.field_slogan }}</div>
+                {% endif %}
+            </h1>
+            <div class="{{ content_cls }}">
+                {{ content.field_image }}
+            </div>
+        {% endif %}
+
+
+
+
+        {% for i, field in content.field_collection['#items'] %}
+
+            {#fullscreen#}
+            {% if content.field_collection[i].field_full_screen['#items']|length > 0 or
+            collection[i]['fullIds']|length > 0 %}
+                {% if content.field_collection[i].field_full_screen['#items']|length > 0 %}
+                    {{ content.field_collection[i].field_full_screen }}
+                {% endif %}
+                {% if collection[i]['fullIds']|length > 0 %}
+                    <div class="field--name-field-full-screen">
+                        {% for full in collection[i]['fullIds'] %}
+                            <div class="field__item">
+                                {{ drupal_entity('node', full.nid, 'full_screen') }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {#four wide#}
+            {% if content.field_collection[i].field_four_wide_main['#items']|length > 0 or
+            content.field_collection[i].field_four_wide['#items']|length > 0 or
+            collection[i]['fourIds']|length > 0 %}
+                {% if g is odd %}
+                    <div class="gray">
+                {% endif %}
+                <div class="content">
+
+                    {% if content.field_collection[i].field_four_wide_title['#items']|length > 0 %}
+                        <h1 class="title tac">
+                            {{ content.field_collection[i].field_four_wide_title }}
+                        </h1>
+                        {% if content.field_collection[i].field_four_wide_link[0]['#title']|length > 0 %}
+                            <div class="tac"><a class="see-all" href="{{ content.field_collection[i].field_four_wide_link[0]['#url_title'] }}">{{ content.field_collection[i].field_four_wide_link[0]['#title'] | t }}</a>
+                            </div>
+                        {% endif %}
+                        {% set content_mtb = 'mtb' %}
+                    {% endif %}
+
+                    <div class="{{ content_mtb }}">
+                        {% if content.field_collection[i].field_four_wide_main['#items']|length > 0 %}
+                            {{ content.field_collection[i].field_four_wide_main }}
+                        {% endif %}
+                        {% if content.field_collection[i].field_four_wide['#items']|length > 0 %}
+                            <div class="tac mtb20">
+                                {{ content.field_collection[i].field_four_wide }}
+                            </div>
+                        {% endif %}
+
+                        {% if collection[i]['fourIds']|length > 0 %}
+                            {{ drupal_entity('node', collection[i]['fourIds'][0].nid, 'four_wide_main') }}
+                            <div class="tac mtb20">
+                                <div class="field--name-field-four-wide">
+                                    <div class="field__item">{{ drupal_entity('node', collection[i]['fourIds'][1].nid, 'four_wide') }}</div>
+                                    <div class="field__item">{{ drupal_entity('node', collection[i]['fourIds'][2].nid, 'four_wide') }}</div>
+                                    <div class="field__item">{{ drupal_entity('node', collection[i]['fourIds'][3].nid, 'four_wide') }}</div>
+                                    <div class="field__item">{{ drupal_entity('node', collection[i]['fourIds'][4].nid, 'four_wide') }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+                {% if g is odd %}
+                    </div>
+                {% endif %}
+                {% set g = g + 1 %}
+            {% endif %}
+
+            {#Interest#}
+            {% if content.field_collection[i].field_interest['#items']|length > 0 or
+            collection[i]['interestIds']|length > 0 %}
+                {% if g is odd %}
+                    <div class="gray">
+                {% endif %}
+                <div class="content interest">
+
+                    {% if content.field_collection[i].field_interest_title['#items']|length > 0 %}
+                        <h1 class="title tac">
+                            {{ content.field_collection[i].field_interest_title }}
+                        </h1>
+                        {% if content.field_collection[i].field_interest_link[0]['#title']|length > 0 %}
+                            <div class="tac"><a class="see-all" href="{{ content.field_collection[i].field_interest_link[0]['#url_title'] }}">{{ content.field_collection[i].field_interest_link[0]['#title'] | t }}</a>
+                            </div>
+                        {% endif %}
+                        {% set content_mtb = '' %}
+                    {% endif %}
+
+                    <div class="{{ content_mtb }}">
+                        {% if content.field_collection[i].field_interest['#items']|length > 0 %}
+                            {{ content.field_collection[i].field_interest }}
+                        {% endif %}
+                        {% if collection[i]['interestIds']|length > 0 %}
+                            <div class="field--name-field-interest">
+                                {% for interest in collection[i]['interestIds'] %}
+                                    <div class="field__item">
+                                        {{ drupal_entity('node', interest.nid, 'interest') }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if g is odd %}
+                    </div>
+                {% endif %}
+                {% set g = g + 1 %}
+            {% endif %}
+
+
+            {#body#}
+            {% for j, body in content.field_collection[i].field_body['#items'] %}
+                {% if content.field_collection[i].field_body[j]|render is not empty %}
+                    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                    'body' : content.field_collection[i].field_body[j]|raw,
+                    'gray' : g
+                    } %}
+                    {% set g = g + 1 %}
+                {% endif %}
+            {% endfor %}
+
+            {#still#}
+            {% if content.field_collection[i].field_still_image|render is not empty %}
+                <div class="still-me" data-stellar-background-ratio="0.5"
+                     style="background-image: url({{ file_url(node.field_collection[i].getFieldCollectionItem().field_still_image[0].entity.fileuri | image_style('stellar')) }});">
+                    {{ content.field_collection[i].field_still_content }}
+                </div>
+            {% endif %}
+
+            {#related#}
+            {% if content.field_collection[i].field_related_title['#items']|length > 0 %}
+                {% set has_title = true %}
+            {% else %}
+                {% set has_title = false %}
+            {% endif %}
+            {% if content.field_collection[i].field_related['#items']|length > 0 %}
+                {% include directory ~ '/templates/twigTemplates/related.html.twig' with {
+                'gray' : g,
+                'items' : content.field_collection[i].field_related,
+                'show_title': has_title,
+                'title' : content.field_collection[i].field_related_title,
+                'link' : content.field_collection[i].field_related_link[0],
+                'body_class' : 'mtb'
+                } %}
+                {% set g = g + 1 %}
+            {% endif %}
+
+            {#related#}
+            {% if collection[i]['relatedIds']|length > 0 %}
+                {% if g is odd %}
+                    <div class="gray">
+                {% endif %}
+                <div item-count="{{ collection[i]['relatedIds']|length }}" class="content o-visible">
+                    {% if content.field_collection[i].field_related_title['#items']|length > 0 %}
+                        <h1 class="title tac">
+                            {{ content.field_collection[i].field_related_title }}
+                        </h1>
+                        {% if content.field_collection[i].field_related_link[0]['#title']|length > 0 %}
+                            <div class="tac"><a class="see-all" href="{{ content.field_collection[i].field_related_link[0]['#url_title'] }}">{{ content.field_collection[i].field_related_link[0]['#title'] | t }}</a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="mtb o-visible tac">
+                        <div class="field--name-field-related">
+                            {% for r in collection[i]['relatedIds'] %}
+                                <div class="field__item">
+                                    {{ drupal_entity('node', r.nid, 'cube') }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% if g is odd %}
+                    </div>
+                {% endif %}
+                {% set g = g + 1 %}
+            {% endif %}
+
+        {% endfor %}
+
+
+        {% if g is odd %}
+            <div class="gray">
+        {% endif %}
+            <div id="send-image-form" class="ui container">
+                <div class="ui stacked">
+                    <h3 class="ui header">{{ 'Send Your Photo' | t }}</h3>
+                    <p>Send us the picture of your Yazd windcathers puzzle to win a prize! </p>
+                    <div class="ui clearing divider"></div>
+                    <div>
+                        {{ drupal_block('send_image_block') }}
+                    </div>
+                </div>
+            </div>
+        {% if g is odd %}
+            </div>
+        {% endif %}
+        {% set g = g + 1 %}
+
+    </div>
+
+    {#Hidden Inputs#}
+    <input type="hidden" id="photographer" value="{{ content.field_photographer[0]['#plain_text'] }}">
+
+
+    <div id="subscribe-form" class="ui modal">
+        <i class="close icon"></i>
+        <div class="content">
+            {{ drupal_block('subscription_block') }}
+        </div>
+        <div class="bot-section">
+            <p>{{ 'Get the best of VisitoIRAN straight to your inbox' | t }}</p>
+            <p>{{ "Subscribe  here to receive email from VisitoIRAN for all your travel inspiration, tips and exclusive offers." | t }}</p>
+        </div>
+    </div>
+
+</article>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        if (document.location.search.indexOf('subscribe') < 0) {
+            $('#subscribe-form.ui.modal').modal({
+                autofocus: false,
+                closable: false,
+                observeChanges: true
+            }).modal('show');
+        }
+    });
+</script>

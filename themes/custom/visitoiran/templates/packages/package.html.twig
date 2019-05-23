@@ -1,0 +1,569 @@
+{% set g = 0 %}
+{% set image_path = bp_config.url ~ bp_config.image_path %}
+{% set package = package.response %}
+
+{% if package %}
+    <article id="packages-details">
+        {#Main Picture & Informations#}
+        <section class="package-info">
+            <div class="title-color package-title">
+                <h1 class="title tac">{{ package.title }}</h1>
+            </div>
+            <div class="gray-darker ptb40">
+                <div class="doubling stackable two column ui grid container">
+                    {#Image Gallery#}
+                    <div class="column">
+                        <div class="package-pictures">
+                            {% if package.logo %}
+                                <div class="picture" style="background-image: url('{{ base_path ~ "direct/" ~ package.logo.id }}')"></div>
+                                {% if package.fileGroup.files|length > 0 %}
+                                    {% for file in package.fileGroup.files %}
+                                        <div class="picture" style="background-image: url('{{ base_path ~ "direct/" ~ file.id }}')"></div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% else %}
+                                <div style="background-image: url('{{ image_url ~ "nophoto.svg" }}')"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {#Package Informations#}
+                    <div class="column">
+                        <div class="extra-info">
+                            <div class="quick-facts">
+                                <ul>
+                                    {% if package.duration %}
+                                        <li>
+                                            <div class="field field--name-field-time-zone field--label-above">
+                                                <div class="field__label">{{ 'Duration' | t }}</div>
+                                                <div class="field__item">{{ package.duration }} {{ 'Days' | t }}</div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+
+                                    <li>
+                                        <div class="field field--name-field-country field--label-above">
+                                            <div class="field__label">{{ 'Country' | t }}</div>
+                                            <div class="field__item">{{ 'Iran' | t }}</div>
+                                        </div>
+                                    </li>
+
+                                    {% if package.packageCode %}
+                                        <li>
+                                            <div class="field field--name-field-barcode field--label-above">
+                                                <div class="field__label">{{ 'Code' | t }}</div>
+                                                <div class="field__item package-code">{{ package.packageCode }}</div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if package.itineraries %}
+                                        <li>
+                                            <div class="field field--name-field-area field--label-above">
+                                                <div class="field__label">{{ 'Destinations' | t }}</div>
+                                                <div class="field__item">
+                                                    {% set currentCity = package.itineraries[0].city.name %}
+                                                    <span class="destinations">{{ currentCity }}</span>
+                                                    {% for itinerary in package.itineraries %}
+                                                        {% if currentCity != itinerary.city.name %}
+                                                            {% set currentCity = itinerary.city.name %}
+                                                            <span class="destinations">{{ itinerary.city.name }}</span>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        {#Hotel Package Dates Body#}
+        {% if package.hotelPackageDates %}
+            <section class="hotel-package-dates tab-menu {{ (g is odd) ? 'gray' : '' }}">
+                <div class="ui container">
+                    <h1 class="title tac">
+                        {{ 'Start Date' | t }}
+                    </h1>
+                    <div class="ui pointing secondary menu">
+                        {% for hotelPackageDate in package.hotelPackageDates %}
+                            <a class="item {{ (loop.index) == 1 ? 'active' : '' }}" data-tab="tab{{ loop.index }}">
+                                <button class="ui button mini round">
+                                    {{ hotelPackageDate.startDate | format_visitoiran_date }}
+                                </button>
+                            </a>
+                        {% endfor %}
+                    </div>
+
+
+                    {% for hotelPackageDate in package.hotelPackageDates %}
+                        <div class="ui tab segment  {{ (loop.index) == 1 ? 'active' : '' }}"
+                             data-tab="tab{{ loop.index }}">
+                            <table class="ui celled padded table hotels-table">
+                                <thead class="hidden-mobile">
+                                <tr>
+                                    <th class="ui center aligned">{{ 'Hotel' | t }}</th>
+                                    <th class="ui center aligned">{{ 'Type' | t }}</th>
+                                    <th class="ui center aligned">{{ 'Stars' | t }}</th>
+                                    {% for room in hotelPackageDate.hotelPackages[0].hotelPackageRoomTypes | sort %}
+                                        <th class="ui center aligned"><div>{{ room.roomType.name }}</div><div class="pt10">{{ 'Age' }}: {{ room.roomType.age }}</div></th>
+                                    {% endfor %}
+                                    <th class="ui center aligned">{{ 'Check Availability' | t }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for hotelPackage in hotelPackageDate.hotelPackages %}
+                                    <tr>
+                                        <td class="ui center aligned">
+                                            <strong class="show-mobile">{{ 'Hotel' | t }}</strong>
+                                            {% for hotel in hotelPackage.hotels %}
+                                                <span class="package-hotel">
+                                                    {{ hotel.name }}
+                                                </span>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="ui center aligned">
+                                            <strong class="show-mobile">{{ 'Type' | t }}</strong>
+                                            {{ hotelPackage.boardType }}
+                                        </td>
+                                        <td class="ui center aligned">
+                                            <div class="ui star rating" data-rating="{{ hotelPackage.star }}"
+                                                 data-max-rating="5"></div>
+                                        </td>
+                                        {% for room in hotelPackage.hotelPackageRoomTypes | sort %}
+                                            <td class="ui center aligned">
+                                                <strong class="show-mobile">{{ room.roomType.name }}</strong>
+                                                {% if room.price > 0 %}
+                                                    <span><span class="price-cell">{{ room.price }}</span> {{ room.currency | t }}</span>
+                                                {% else %}
+                                                    <span> --- </span>
+                                                {% endif %}
+                                            </td>
+                                        {% endfor %}
+                                        <td class="center aligned check-availability">
+                                            {% set specialInfo = {
+                                            packageId: package.id,
+                                            name: package.title,
+                                            duration: package.duration,
+                                            code: package.packageCode,
+                                            logoURL: base_path ~ 'direct/' ~ package.logo.id,
+                                            startDate: hotelPackageDate.startDate,
+                                            hotelPackageId: hotelPackage.id
+                                            } %}
+
+                                            {% if hotelPackageDate.startDate|date('Y/m/d') > "now"|date('Y/m/d') %}
+                                                <a class="ui image label blue">
+                                                    <i class="checkmark icon"></i>
+                                                    <button class="detail check"
+                                                            onclick="window.VOI.openChooseRoomModal
+                                                                    ('{{ hotelPackage|json_encode }}', '{{ specialInfo|json_encode }}')">
+                                                        {{ 'Check' | t }}
+                                                    </button>
+                                                </a>
+                                            {% else %}
+                                                <span class="ui image label">
+                                                    <i class="remove icon"></i>
+                                                    <div class="detail">{{ 'Not Available' | t }}</div>
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Overview Body#}
+        {% if package.overview %}
+            <section class="overview {{ (g is odd) ? 'gray' : '' }}">
+                <div class="ui container">
+                    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                    'title_name' : 'Overview',
+                    'body' : package.overview,
+                    'gray' : false,
+                    'show_title' : true,
+                    'title_class': 'full-bottom-border no-line-under',
+                    'icon_name': "newspaper icon"
+                    } %}
+                </div>
+            </section>
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Description Body#}
+        {% if package.description %}
+            <section class="description {{ (g is odd) ? 'gray' : '' }}">
+                <div class="ui container">
+                    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                    'title_name' : 'Descriptions',
+                    'body' : package.description,
+                    'gray' : false,
+                    'show_title' : true,
+                    'title_class': 'full-bottom-border no-line-under',
+                    'icon_name': "book icon"
+                    } %}
+                </div>
+            </section>
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Cancellation Policy Body#}
+        {% if package.cancellationPolicy %}
+            <section class="cancellation-policy {{ (g is odd) ? 'gray' : '' }}">
+                <div class="ui container">
+                    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                    'title_name' : 'Cancellation Policy',
+                    'body' : package.cancellationPolicy,
+                    'gray' : false,
+                    'show_title' : true,
+                    'title_class': 'full-bottom-border no-line-under',
+                    'icon_name': 'delete calendar icon'
+                    } %}
+                </div>
+            </section>
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Sightseeing Body#}
+        {% if package.sightseeing %}
+            <section class="sightseeing {{ (g is odd) ? 'gray' : '' }}">
+                <div class="ui container">
+                    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                    'title_name' : 'Sightseeing',
+                    'body' : package.sightseeing,
+                    'gray' : false,
+                    'show_title' : true,
+                    'title_class': 'full-bottom-border no-line-under',
+                    'icon_name': 'bicycle icon'
+                    } %}
+                </div>
+            </section>
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Tour Service Policy Body#}
+        {% if package.tourService %}
+            <section class="tout-service {{ (g is odd) ? 'gray' : '' }}">
+                <div class="ui container">
+                    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                    'title_name' : 'Tour Service',
+                    'body' : package.tourService,
+                    'gray' : false,
+                    'show_title' : true,
+                    'title_class': 'full-bottom-border no-line-under',
+                    'icon_name': 'shopping bag icon'
+                    } %}
+                </div>
+            </section>
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Map#}
+        {% if package.itineraries %}
+            <section class="map">
+                <div id="contacts">
+                    <div id="google-map" class="{{ clazz }}" style="height: 430px;"></div>
+                </div>
+                {% set itemToGoogle = [] %}
+                {% for itinerary in package.itineraries %}
+                    {% set infoWindow %}<a href="#{{ itinerary.title ~ '-' ~ itinerary.duration }}">{{ itinerary.title }}</a>{% endset %}
+                    {% set itemToGoogle = itemToGoogle|merge([{
+                    lat: itinerary.lat,
+                    lng: itinerary.lng,
+                    title: itinerary.title,
+                    duration: itinerary.duration,
+                    infoWindowContent: infoWindow
+                    }]) %}
+                {% endfor %}
+                {% include directory ~ '/templates/twigTemplates/google.map.script.html.twig' with {
+                points : itemToGoogle,
+                container_id : 'google-map',
+                address : 'infoWindowContent',
+                'title_class': 'full-bottom-border'
+                } %}
+            </section>
+
+            {#Itineraries#}
+            <section class="itineraries">
+                <div>
+                    {% embed directory ~ '/templates/twigTemplates/body.html.twig' with {
+                    'title_name' : 'Itineraries',
+                    'show_title' : true,
+                    'readmore_class': "no-readmode"
+                    } %}
+                        {% block body %}
+                            <ul class="itinerary">
+                                {% for itinerary in package.itineraries %}
+                                    <li class="itinerary-item" id="{{ itinerary.title }}-{{ itinerary.duration }}">
+                                        {% autoescape %}
+                                            <div class="header">
+                                                <span class="ui ribbon second label">{{ 'Day' | t }} {{ itinerary.duration }}</span>
+                                                <h2 class="title">{{ itinerary.title }}</h2>
+                                            </div>
+                                            <div class="description">
+                                                <p class="pt20">
+                                                    {{ itinerary.description|raw }}
+                                                </p>
+                                            </div>
+                                        {% endautoescape %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </section>
+        {% endif %}
+
+        {#Get Rooms Modal#}
+        <section>
+            {#First Modal#}
+            <div class="ui modal coupled package-choose-room">
+                <div class="p0">
+                    <div class="ui five steps mini">
+                        <div class="step active">
+                            <div class="content">
+                                <div class="title">{{ 'Room Arrangement' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Check Availability' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Passengers Info' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Confirm' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Book Info' | t }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div id="package-choose-room-package-info" class="pb20">
+
+                    </div>
+                    <form class="ui form">
+                        <table class="ui small table">
+                            <thead class="hidden-mobile">
+                            <tr>
+                                <th class="ui center aligned three wide">{{ 'Room Type' | t }}</th>
+                                <th class="ui center aligned three wide">{{ 'Number of Rooms' | t }}</th>
+                                <th class="ten wide">{{ 'Number of Passengers' | t }}</th>
+                            </tr>
+                            </thead>
+                            <tbody id="choose-package-rooms">
+
+                            </tbody>
+                            <tfoot class="package-total-section">
+                            <tr>
+                                <th colspan="2" class="ui center aligned total-rooms">
+                                    <strong>{{ 'Total Rooms' | t }}: <span>0</span></strong>
+                                </th>
+                                <th class="ui total-passengers">
+                                    <strong>{{ 'Total Passengers' | t }}: <span>0</span></strong>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+                <div class="actions">
+                    <div class="ui deny button mini left floated round">{{ 'Discard' | t }}</div>
+                    <div class="ui primary right disabled button mini check-availability-btn round"
+                         onclick="window.VOI.checkAvailability()">{{ 'Check Availability' | t }}</div>
+                </div>
+            </div>
+
+            {#Second Modal#}
+            <div class="ui modal coupled check-availability-result">
+                <div class="p0">
+                    <div class="ui five steps mini">
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Room Arrangement' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="active step">
+                            <div class="content">
+                                <div class="title">{{ 'Check Availability' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Passengers Info' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Confirm' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Book Info' | t }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="package-check-availability-info" class="ui content">
+
+                </div>
+                <div class="actions">
+                    <div class="ui deny button mini left floated round">{{ 'Discard' | t }}</div>
+                    <div class="ui deny button mini go-back-btn round">{{ 'Back' | t }}</div>
+                    <div class="ui primary right button mini payment-btn round" onclick="window.VOI.bookPackage()">{{ 'Continue' | t }}</div>
+                </div>
+            </div>
+
+            {#Thirth Modal#}
+            <div class="ui modal coupled passengers-for-book">
+                <div class="p0">
+                    <div class="ui five steps mini">
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Room Arrangement' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Check Availability' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="active step">
+                            <div class="content">
+                                <div class="title">{{ 'Passengers Info' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Confirm' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disabled step">
+                            <div class="content">
+                                <div class="title">{{ 'Book Info' | t }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="passengers-form-for-book" class="ui content">
+
+                </div>
+                <div class="actions">
+                    <div class="ui deny button mini left floated round">{{ 'Discard' | t }}</div>
+                    <div class="ui button mini go-back-btn round">{{ 'Back' | t }}</div>
+                    <div class="ui primary right button mini confirm-info-btn round" onclick="window.VOI.confirmBookInfo()">{{ 'Book Now' | t }}</div>
+                </div>
+            </div>
+
+            {#Fourth Modal#}
+            <div class="ui modal coupled package-book-confirm">
+                <div class="p0">
+                    <div class="ui five steps mini">
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Room Arrangement' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Check Availability' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Passengers Info' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="active step">
+                            <div class="content">
+                                <div class="title">{{ 'Confirm' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="disable step">
+                            <div class="content">
+                                <div class="title">{{ 'Book Info' | t }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="package-book-Confirmation" class="ui content">
+
+                </div>
+                <div class="actions">
+                    <div class="ui deny button mini left floated round">{{ 'Discard' | t }}</div>
+                    <div class="ui button mini go-back-btn round">{{ 'Back' | t }}</div>
+                    <div class="ui primary right button mini disabled book-confirm-btn round" onclick="window.VOI.packagePayment()">{{ 'Confirm' | t }}</div>
+                </div>
+            </div>
+
+            {#Fifth Modal#}
+            <div class="ui modal coupled package-book-result">
+                <div class="p0">
+                    <div class="ui five steps mini">
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Room Arrangement' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Check Availability' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Passengers Info' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="content">
+                                <div class="title">{{ 'Confirm' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="active step">
+                            <div class="content">
+                                <div class="title">{{ 'Book Info' | t }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="package-book-information" class="ui content">
+
+                </div>
+                <div class="actions">
+                    <div class="ui deny button mini round">{{ 'Discard' | t }}</div>
+                    <div class="ui primary right button mini go-to-bank-btn round" onclick="window.VOI.goToBank()">{{ 'Pay' | t }}</div>
+                </div>
+            </div>
+        </section>
+    </article>
+{% else %}
+    <div class="error-packages package-not-found">
+        <div class="content">
+            <div class="header">{{ 'Whoops!' | t }}</div>
+            <div class="message">{{ 'No Result to Show' | t }}</div>
+            <a class="ui primary button tiny round" href="/">HOME</a>
+        </div>
+    </div>
+{% endif %}

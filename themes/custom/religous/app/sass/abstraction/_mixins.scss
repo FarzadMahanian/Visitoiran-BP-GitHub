@@ -1,0 +1,67 @@
+@mixin icon($position: before, $icon: false, $size: 1em, $styles: true) {
+    $here: false;
+    @if $position == both {
+        $position: 'before, &:after';
+    }
+    @if $position == here {
+        $position: 'before';
+        $here: true;
+        position: relative;
+    }
+    // Either a :before or :after pseudo-element, or both, defaulting to :before
+    &:#{$position} {
+        @if $here {
+            position: absolute;
+            bottom: 15px;
+            right: 5px;
+        }
+        @if $icon {
+            // A particular icon has been specified
+            content: "#{map-get($icons, $icon)}";
+        }
+        @if $styles {
+            // Supportive icon styles required
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-family: 'Icons';
+        }
+        @if $size {
+            font-size: $size;
+        }
+        -webkit-font-smoothing: antialiased;
+        margin: 0 5px;
+        // Include any extra rules supplied for the pseudo-element
+        @content;
+    }
+}
+
+@mixin responsive-align() {
+    margin: 0 auto;
+    @include breakpoint($landscape) {
+        width: $landscape;
+    }
+    @include breakpoint($tablet) {
+        width: $tablet;
+    }
+    @include breakpoint($desktop) {
+        width: $desktop;
+    }
+}
+
+@mixin font-family($type: normal) {
+    @if $type == normal {
+        /*rtl:remove*/
+        font-family: Benton, Tahoma, Arial, Sans-Serif;
+        /*rtl:raw:
+        font-family: IranSansLight, IranSans, BentonLight, Tahoma, Arial, Sans-Serif;
+        */
+    }
+    @if $type == light {
+        /*rtl:remove*/
+        font-family: BentonLight, Benton, Tahoma, Arial, Sans-Serif;
+        /*rtl:raw:
+        font-family: IranSansLight, IranSans, BentonLight, ßTahoma, Arial, Sans-Serif;
+        */
+    }
+}

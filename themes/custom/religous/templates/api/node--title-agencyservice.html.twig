@@ -1,0 +1,37 @@
+{% set image_path = bp_config.url ~ bp_config.image_path %}
+<article{{ attributes }}>
+
+    <div class="content-wrapper service">
+
+        {#Main#}
+        <div class="gray">
+            <div class="content">
+                <h1 class="title tac">
+                    {{ service.title }}
+                </h1>
+                <div class="interest">
+                    <div class="image"><img src="{{ image_path }}{{ service.logo.fileUploadedId }}?w=200&h=200&c=true" alt="{{ service.title }}"></div>
+                    <div class="description">
+                        <div class="body vbody">
+                            {% autoescape %}
+                                {{ service.description|raw }}
+                            {% endautoescape %}
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                {% set href = path('<front>') ~ '/page/agency?agency=' ~ service.agencies[0].groupId %}
+                <a href="{{ href }}">
+                    <div class="agency">
+                        <div class="tac logo mtb20">
+                            <img src="{{ image_path }}{{ service.agencies[0].logoId }}?w=100&h=100&c=true" alt="{{ service.agencies[0].title }}">
+                        </div>
+                    </div>
+                    <h2 class="title no-line-under tac">{{ service.agencies[0].title }}</h2>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</article>

@@ -1,0 +1,12 @@
+<article class="float-teaser div1">
+    <div class="image">{{ content.field_image }}</div>
+    <div class="description">
+        <h2>
+            <a href="{{ url }}">{{ label }}</a>
+            {% if content.field_slogan|render is not empty %}
+                <div class="slogan">{{ content.field_slogan }}</div>
+            {% endif %}
+        </h2>
+        <div class="body">{{ content.body }}</div>
+    </div>
+</article>

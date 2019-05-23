@@ -1,0 +1,80 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsT0LEBibZ1Svifpe_vzbRNDIvOO7PIlk&libraries=places"></script>
+
+<script type="text/javascript">
+
+
+    var markers = [];
+    var travelMode = '{{ travelMode }}';
+
+    {% for c in points %}
+    markers.push({"lat": '{{ c.lat }}', "lon": '{{ c.lon }}'});
+    {% endfor %}
+
+    var mapCanvas = document.getElementById("google-map");
+    var myCenter = new google.maps.LatLng(markers[0].lat, markers[0].lon);
+    var mapProp = {
+        center: myCenter,
+        zoom: 9,
+        panControl: false,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        overviewMapControl: false,
+        rotateControl: true,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var map = new google.maps.Map(mapCanvas, mapProp);
+
+    if ((travelMode == 'DRIVING' || travelMode == 'WALKING') && markers.length > 1) {
+
+        var waypoints = [];
+        for (i = 0; i < markers.length; i++) {
+            if (i == 0) var mapOrigin = new google.maps.LatLng(markers[i].lat, markers[i].lon);
+            else if (i ==  markers.length - 1) var mapDestination = new google.maps.LatLng(markers[i].lat, markers[i].lon);
+            else waypoints.push({
+                    location: new google.maps.LatLng(markers[i].lat, markers[i].lon),
+                    stopover: true
+                });
+
+        }
+
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+        directionsService.route({
+            origin: mapOrigin,
+            destination: mapDestination,
+            waypoints: waypoints,
+            travelMode: google.maps.TravelMode[travelMode],
+        }, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            } else {
+                console.log('Directions request failed due to ' + status);
+            }
+        });
+
+    } else {
+        var marker, i;
+        var bounds = new google.maps.LatLngBounds();
+
+        for (i = 0; i < markers.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(markers[i].lat, markers[i].lon),
+                icon: {
+                    url: "{{ host_path }}/themes/custom/visitoiran/app/images/pin.svg",
+                    scaledSize: new google.maps.Size(30, 49),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 45)
+                },
+                map: map
+            });
+
+            bounds.extend(new google.maps.LatLng(markers[i].lat, markers[i].lon));
+        }
+        if (markers.length > 1) map.fitBounds(bounds); else map.setZoom(13);
+    }
+
+</script>

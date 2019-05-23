@@ -1,0 +1,14 @@
+{
+  "name": "drupal/bp_api",
+  "type": "drupal-module",
+  "description": "Services from bp",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/bp_api",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/bp_api",
+    "source": "http://cgit.drupalcode.org/bp_api"
+  },
+  "require": { }
+}

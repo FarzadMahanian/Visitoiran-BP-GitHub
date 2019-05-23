@@ -1,0 +1,60 @@
+@import 'fontvars';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+$fpath: '../fonts/';
+
+$name: 'ionicons/ionicons';
+@font-face {
+    font-family: 'Icons';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'hotels/hotel-icons';
+@font-face {
+    font-family: 'HotelIcons';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'organic/Organic_Elements';
+@font-face {
+    font-family: 'Organic';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'iranSans/IranSans';
+@font-face {
+    font-family: 'IranSans';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff'),
+    url('#{$fpath}#{$name}.woff2') format('woff2');
+}
+
+$name: 'iranSans/IranSansLight';
+@font-face {
+    font-family: 'IranSansLight';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff'),
+    url('#{$fpath}#{$name}.woff2') format('woff2');
+}
+
+$name: 'iranSans/IranSansBold';
+@font-face {
+    font-family: 'IranSansBold';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff'),
+    url('#{$fpath}#{$name}.woff2') format('woff2');
+}

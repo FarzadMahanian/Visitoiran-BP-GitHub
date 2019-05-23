@@ -1,0 +1,14 @@
+{
+  "name": "drupal/hotelux_api",
+  "type": "drupal-module",
+  "description": "Services from hotelux.com",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/hotelux_api",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/hotelux_api",
+    "source": "http://cgit.drupalcode.org/hotelux_api"
+  },
+  "require": { }
+}

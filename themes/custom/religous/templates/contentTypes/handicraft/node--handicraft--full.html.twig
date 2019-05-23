@@ -1,0 +1,72 @@
+<article{{ attributes }}>
+
+    <div class="content-wrapper full-main">
+
+        {#Main Picture#}
+        <div class="pattern">
+            <div class="content main-title tac">
+                {{ content.field_image }}
+                <h1 class="title tac no-eslimi no-line-under">{{ label }}</h1>
+            </div>
+        </div>
+
+        {#Image Galerry#}
+        {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' %}
+
+        {#Description Body#}
+        {% set zebra = 0 %}
+        {% for b in node.body %}
+            {% set gray = false %}
+            {% set show_title = false %}
+
+            {% if loop.index % 4 == 0 %}
+                {% set gray = false %}
+                {% set green = false %}
+            {% endif %}
+            {% if loop.index % 4 == 1 %}
+            {% endif %}
+            {% if loop.index % 4 == 2 %}
+                {% set gray = true %}
+                {% set green = false %}
+            {% endif %}
+            {% if loop.index % 4 == 3 %}
+                {% set gray = false %}
+                {% set green = true %}
+            {% endif %}
+
+            {% if loop.index == 1 %}
+                {% set show_title = true %}
+            {% endif %}
+
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'title_value' : node.title.value,
+            'body' :  b.value,
+            'body_class' : 'h2-bold',
+            'gray' : gray,
+            'show_title' : show_title
+            } %}
+
+
+            {% set zebra = loop.index %}
+        {% endfor %}
+
+        {#View#}
+        {% if zebra % 2 == 1 %}
+        <div class="gray">
+            {% endif %}
+            <div class="content render-view">
+                <h1 class="title">
+                    {{ 'Other Handicrafts' | t }}
+                </h1>
+                <div class="mtb">
+                    {{ handicrafts }}
+                </div>
+                <div class="tac"><a class="see-all" href="{{ url('<front>') }}/all?type=handicraft">{{ 'See All Handicrafts' | t }}</a></div>
+            </div>
+            {% if zebra % 2 == 1 %}
+        </div>
+        {% endif %}
+
+    </div>
+
+</article>

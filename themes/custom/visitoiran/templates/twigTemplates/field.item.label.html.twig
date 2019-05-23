@@ -1,0 +1,16 @@
+<li>
+    <div class="field {{ class }}">
+        <div class="field__label">
+            {% if label %}
+                {{ label }}
+            {% endif %}
+            {% block label %}{% endblock %}
+        </div>
+        <div class="field__item">
+            {% if item %}
+                {{ item }}
+            {% endif %}
+            {% block item %}{% endblock %}
+        </div>
+    </div>
+</li>

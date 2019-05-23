@@ -1,0 +1,26 @@
+<?php
+function hotelux_theme($existing, $type, $theme, $path) {
+    $language_id = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $host_path = \Drupal::request()->getScheme() . '://' . \Drupal::request()->getHost();
+    $base_path = $host_path;
+    $base_path .= DIRECTORY_SEPARATOR;
+    if ($language_id != 'en') {
+        $base_path .= $language_id . DIRECTORY_SEPARATOR;
+    }
+    $image_path = $base_path . 'themes/custom/visitoiran/app/images/';
+    $default_variables = [
+        'host_path' => $host_path,
+        'base_path' => $base_path,
+        'language_id' => $language_id,
+        'image_url' => $image_path,
+        'messages' => drupal_get_messages()
+    ];
+    return [
+        'hotels' => [
+            'variables' => array_merge($default_variables, ['hotels' => NULL])
+        ],
+        'hotel' => [
+            'variables' => array_merge($default_variables, ['hotel' => NULL])
+        ]
+    ];
+}

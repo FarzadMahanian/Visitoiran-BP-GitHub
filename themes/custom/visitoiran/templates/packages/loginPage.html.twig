@@ -1,0 +1,210 @@
+{#{{ dump(visito_message) }}#}
+
+<div id="messages-container">
+    {{ page.highlighted }}
+    <div class="custom-messages">
+        {% if visito_message.error[0] %}
+            <div class="ui negative message">
+                <i class="close icon"></i>
+                <div class="header">
+                    {{ 'Log In Failed' | t }}.
+                </div>
+                <p>{{ visito_message.error[0] }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if searchTerms.uuid %}
+    <div class="ui middle aligned center aligned grid login-page">
+        <div class="column">
+            <div class="ui top attached tabular menu">
+                <a class="item active" data-tab="set-new-password-tab">{{ 'Set New Password' | t }}</a>
+            </div>
+            <div class="ui bottom attached tab segment active" data-tab="set-new-password-tab">
+                <form class="ui large form" id="set-password-form">
+                    <div class="ui segment p20 m0">
+                        <h3 class="ui header">
+                            <div class="image site-logo"></div>
+                        </h3>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'New Password' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="password" name="newPassword" placeholder="{{ 'New Password' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'Confirm New Password' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="password" name="confirmPassword" placeholder="{{ 'Confirm New Password' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="uuid" value="{{ searchTerms.uuid }}">
+                        <button type="submit" class="ui fluid primary mini button"><i class="lock icon"></i>{{ 'Set Password' | t }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="ui middle aligned center aligned grid login-page">
+        <div class="column">
+            <div class="ui top attached tabular menu">
+                <a class="item login-tab {% if searchTerms.userName is empty %} active {% endif %}" data-tab="login-tab">{{ 'Login' | t }}</a>
+                <a class="item register-tab" data-tab="register-tab">{{ 'Register' | t }}</a>
+                <a class="item activation-tab {% if searchTerms.userName %} active {% endif %}" data-tab="activation-tab">{{ 'Activation' | t }}</a>
+                <a class="item reset-pass-tab" data-tab="reset-pass-tab">{{ 'Reset Password' | t }}</a>
+            </div>
+            <div class="ui bottom attached tab segment {% if searchTerms.userName is empty %} active {% endif %}" data-tab="login-tab">
+                <form class="ui large fluid form" id="login-form" method="post" action="{{ path('login') }}">
+                    <div class="ui segment p20 m0">
+                        <h3 class="ui header">
+                            <div class="image site-logo"></div>
+                        </h3>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'E-mail' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="text" name="email" placeholder="{{ 'E-mail' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'Password' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="password" name="password" placeholder="{{ 'Password' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="ui fluid primary mini button"><i class="sign in icon"></i>{{ 'Login' | t }}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="register-tab">
+                <form class="ui large form" id="register-form">
+                    <div class="ui segment p20 m0">
+                        <h3 class="ui header">
+                            <div class="image site-logo"></div>
+                        </h3>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'E-mail' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="text" name="email" placeholder="{{ 'E-mail' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'Password' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="password" name="password" placeholder="{{ 'Password' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'Confirm Password' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="password" name="confirmPassword" placeholder="{{ 'Confirm Password' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="ui fluid primary mini button"><i class="add user icon"></i>{{ 'Register' | t }}</button>
+                    </div>
+
+                </form>
+            </div>
+            <div class="ui bottom attached tab segment {% if searchTerms.userName %} active {% endif %}" data-tab="activation-tab">
+                <form class="ui large form" id="active-user-form">
+                    <div class="ui segment p20 m0">
+                        <h3 class="ui header">
+                            <div class="image site-logo"></div>
+                        </h3>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'E-mail' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="text" name="email" placeholder="{{ 'E-mail' | t }}" value="{{ searchTerms.userName }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'Activation Code' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="text" name="activationCode" placeholder="{{ 'Activation Code' | t }}" value="{{ searchTerms.c }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="ui fluid primary mini button"><i class="checkmark icon"></i>{{ 'Active User' | t }}</button>
+                        <div class="pt10">
+                            <a id="resend-activation-btn">{{ 'Resend Activation Email' | t }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="reset-pass-tab">
+                <form class="ui large form" id="reset-password-form">
+                    <div class="ui segment p20 m0">
+                        <h3 class="ui header">
+                            <div class="image site-logo"></div>
+                        </h3>
+                        <div class="field">
+                            <label class="ui left aligned container">{{ 'E-mail' | t }}</label>
+                            <div class="ui input corner labeled">
+                                <input type="text" name="email" placeholder="{{ 'E-mail' | t }}">
+                                <div class="ui corner label">
+                                    <i class="asterisk icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="ui fluid primary mini button"><i class="refresh icon"></i>{{ 'Reset' | t }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="ui modal mini resend-activation">
+        <form class="ui large form" id="resend-activation-form">
+            <div class="ui segment p20 m0">
+                <h3 class="ui header">
+                    <div class="image site-logo"></div>
+                </h3>
+                <div class="field">
+                    <label class="ui left aligned container">{{ 'E-mail' | t }}</label>
+                    <div class="ui input corner labeled">
+                        <input type="text" name="email" placeholder="{{ 'E-mail' | t }}">
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="pt10">
+                        <button type="submit" class="ui fluid primary mini button m0"><i class="checkmark icon"></i>{{ 'Resend Activation Email' | t }}</button>
+                    </div>
+                    <div class="pt10">
+                        <div class="ui fluid deny button mini m0">{{ 'Close' | t }}</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endif %}

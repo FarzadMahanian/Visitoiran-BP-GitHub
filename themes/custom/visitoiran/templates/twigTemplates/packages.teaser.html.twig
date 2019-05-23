@@ -1,0 +1,59 @@
+{% set image_path = bp_config.url ~ bp_config.image_path %}
+
+{% if bgcolor is empty %}
+    {% set bgcolor = 'gray' %}
+{% endif %}
+
+{% if packages is not empty %}
+    {% if gray %}
+        <div class="gray">
+    {% endif %}
+
+    {% if front %}
+        <div class="front-section">
+    {% endif %}
+
+        <div
+            {% if id %}
+                id = {{ id }}
+            {% endif %}
+
+            class="content {{ content_class }}">
+            <h1 class="title tac">
+                {{ title | t }}
+            </h1>
+            {% block payam %}
+            {% endblock %}
+            <div class="mtb render-view">
+                {% for package in packages %}
+                    {% set href = path('<front>') ~ 'package?package=' ~ package.groupId %}
+                    <div class="views-row">
+                        <article class="float-short">
+                            <div class="image">
+                                <a href="{{ href }}">
+                                    <img src="{{ image_path }}{{ package.logoId }}?w=215&h=215&c=true" alt="{{ package.title }}">
+                                </a>
+                                <h3 class="title package-symbol">
+                                    <a href="{{ href }}">{{ package.title }}</a>
+                                </h3>
+                            </div>
+
+                            {% if package.priceGroups[0].price %}
+                                <div class="description" style="background-color: {{ bgcolor }}">
+                                    <h4 class="tac">{{ package.priceGroups[0].price|number_format }}</h4>
+                                </div>
+                            {% endif %}
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% if front %}
+        </div>
+    {% endif %}
+
+    {% if gray %}
+        </div>
+    {% endif %}
+{% endif %}

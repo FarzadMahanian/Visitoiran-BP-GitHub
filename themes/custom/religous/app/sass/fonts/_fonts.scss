@@ -1,0 +1,66 @@
+@import 'fontvars';
+$fpath: '../fonts/';
+
+
+$name: 'benton/BentonSans Regular';
+@font-face {
+    font-family: 'Benton';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'benton/BentonSans Light';
+@font-face {
+    font-family: 'BentonLight';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'ionicons/ionicons';
+@font-face {
+    font-family: 'Icons';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'organic/Organic_Elements';
+@font-face {
+    font-family: 'Organic';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'felixti/felixti';
+@font-face {
+    font-family: 'Felixti';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'cairo/Cairo';
+@font-face {
+    font-family: 'IranSans';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}
+
+$name: 'cairo/CairoLight';
+@font-face {
+    font-family: 'IranSansLight';
+    src: url('#{$fpath}#{$name}.otf');
+    src: local('#{$name}'),
+    url('#{$fpath}#{$name}.ttf') format('truetype'),
+    url('#{$fpath}#{$name}.woff') format('woff');
+}

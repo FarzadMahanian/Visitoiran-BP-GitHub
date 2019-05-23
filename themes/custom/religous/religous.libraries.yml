@@ -1,0 +1,22 @@
+religous-theme:
+  css:
+    theme:
+      app/css/autocomplete.css: {}
+      app/css/horizontal-menu.css: {}
+      app/css/style.css: {}
+      app/lib/filament-sticky/fixedsticky.css: {}
+  js:
+    app/lib/jquery.jcarousellite/jcarousellite.min.js: {}
+    app/lib/readmore-js/readmore.min.js: {}
+    app/lib/filament-fixed/fixedfixed.js: {}
+    app/lib/filament-sticky/fixedsticky.js: {}
+    app/js/main.js: {}
+  dependencies:
+    - core/jquery
+
+religous-theme-rtl:
+  css:
+    theme:
+      app/css/style-rtl.css: {}
+      app/css/horizontal-menu-rtl.css: {}
+

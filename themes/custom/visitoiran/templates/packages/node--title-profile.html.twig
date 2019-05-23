@@ -1,0 +1,502 @@
+{% set testBookList = {
+"id": 117,
+"tourPackageId": 109,
+"tourPackageName": "7Days Tour Around the IRAN",
+"tourPackageCode": "IR1109",
+"creationDate": 1500163200000,
+"bookingStatus": "PAID_AND_PENDING",
+"price": 1200,
+"leaderInfo": {
+"id": 117,
+"firstName": "Farzad",
+"surName": "Mahanian",
+"email": "f.mahanian@gmail.com",
+"country": {
+"id": 1,
+"name": "Iran",
+"abbreviation": "IR"
+},
+"mobile": "09121214749"
+},
+"passengers": [
+{
+"id": 130,
+"passengerType": null,
+"firstName": "Farzad",
+"surName": "Mahanian"
+}
+],
+"hotelPackageDate": {
+"hotelPackageStartDate": "2017-08-07",
+"hotels": [
+{
+"name": "Azadi",
+"hotelBanner": null,
+"id": 1
+},
+{
+"name": "Esteghlal",
+"hotelBanner": null,
+"id": 2
+},
+{
+"name": "Shandiz",
+"hotelBanner": "4027c3f2-f386-4c29-9551-de9442b76b79",
+"id": 3
+}
+]
+},
+"bookingRooms": [
+{
+"hotelPackageRoomTypeId": 1743,
+"rooms": {
+"id": 6,
+"name": "Child with bed",
+"capacity": 1,
+"age": "12",
+"room": false
+},
+"numberOfRooms": 0
+},
+{
+"hotelPackageRoomTypeId": 1739,
+"rooms": {
+"id": 7,
+"name": "Suite",
+"capacity": 4,
+"age": "18",
+"room": true
+},
+"numberOfRooms": 0
+},
+{
+"hotelPackageRoomTypeId": 1740,
+"rooms": {
+"id": 8,
+"name": "Single",
+"capacity": 1,
+"age": "12",
+"room": true
+},
+"numberOfRooms": 1
+},
+{
+"hotelPackageRoomTypeId": 1741,
+"rooms": {
+"id": 9,
+"name": "Double",
+"capacity": 2,
+"age": "12",
+"room": true
+},
+"numberOfRooms": 0
+}
+]
+} %}
+
+<article class="bg-gray-light ptb40 user-profile">
+    <div class="ui container tab-menu">
+        <div>
+            <div class="ui top attached tabular menu">
+                <a class="item active" data-tab="book-list">{{ 'Books List' | t }}</a>
+                <a class="item" data-tab="personal-info">{{ 'Personal Info' | t }}</a>
+            </div>
+
+            <div class="ui attached tab segment active" data-tab="book-list">
+                <div class="advanced-search-form pb40">
+                    <h2 class="title full-bottom-border no-line-under mb20">{{ 'Advanced Search' | t }}</h2>
+                    <form class="ui form">
+                        <div class="field">
+                            <div class="four fields">
+                                <div class="four wide field">
+                                    <label>{{ 'Book Id' | t }}</label>
+                                    <div class="ui mini input">
+                                        <input type="text" name="bookListBookId" placeholder="{{ 'Book Id' | t }}">
+                                    </div>
+                                </div>
+                                <div class="four wide field">
+                                    <label>{{ 'Package Id' | t }}</label>
+                                    <div class="ui mini input">
+                                        <input type="text" name="bookListPackageId" placeholder="{{ 'Package Id' | t }}">
+                                    </div>
+                                </div>
+                                <div class="four wide field">
+                                    <label>{{ 'Package Name' | t }}</label>
+                                    <div class="ui mini input">
+                                        <input type="text" name="bookListPackageName" placeholder="{{ 'Package Name' | t }}">
+                                    </div>
+                                </div>
+                                <div class="four wide field">
+                                    <label>{{ 'Passenger Name' | t }}</label>
+                                    <div class="ui mini input">
+                                        <input type="text" name="bookListPassengerName" placeholder="{{ 'Passenger Name' | t }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="four fields">
+                                <div class="eight wide field">
+                                    <label>{{ 'Package Price' | t }}</label>
+                                    <div class="two fields">
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <input type="text" name="bookListPackagePriceFrom" placeholder="{{ 'From' | t }}">
+                                            </div>
+                                        </div>
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <input type="text" name="bookListPackagePriceTo" placeholder="{{ 'To' | t }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="four wide field">
+                                    <label>{{ 'Package Duration' | t }}</label>
+                                    <div class="two fields">
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <select class="ui fluid dropdown" name="bookListPackageDurationFrom">
+                                                    <option value="">{{ 'From' | t }}</option>
+                                                    <option value="1">{{ '1' | t }}</option>
+                                                    <option value="2">{{ '2' | t }}</option>
+                                                    <option value="3">{{ '3' | t }}</option>
+                                                    <option value="4">{{ '4' | t }}</option>
+                                                    <option value="5">{{ '5' | t }}</option>
+                                                    <option value="6">{{ '6' | t }}</option>
+                                                    <option value="7">{{ '7' | t }}</option>
+                                                    <option value="8">{{ '8' | t }}</option>
+                                                    <option value="9">{{ '9' | t }}</option>
+                                                    <option value="0">{{ '10' | t }}</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <select class="ui fluid dropdown" name="bookListPackageDurationTo">
+                                                    <option value="">{{ 'To' | t }}</option>
+                                                    <option value="1">{{ '1' | t }}</option>
+                                                    <option value="2">{{ '2' | t }}</option>
+                                                    <option value="3">{{ '3' | t }}</option>
+                                                    <option value="4">{{ '4' | t }}</option>
+                                                    <option value="5">{{ '5' | t }}</option>
+                                                    <option value="6">{{ '6' | t }}</option>
+                                                    <option value="7">{{ '7' | t }}</option>
+                                                    <option value="8">{{ '8' | t }}</option>
+                                                    <option value="9">{{ '9' | t }}</option>
+                                                    <option value="0">{{ '10' | t }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="four wide field">
+                                    <label>{{ 'State' | t }}</label>
+                                    <div class="ui mini input">
+                                        <select class="ui fluid dropdown" name="bookListPackageStatus">
+                                            <option value="">{{ 'State' | t }}</option>
+                                            <option value="AL">{{ 'Paid & Pending' | t }}</option>
+                                            <option value="AK">{{ 'Paid' | t }}</option>
+                                            <option value="AZ">{{ 'Confirm' | t }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="eight wide field">
+                                    <label>{{ 'Package Date' | t }}</label>
+                                    <div class="two fields">
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <input type="text" class="vesta-dp" name="bookListPackageDateFrom" placeholder="{{ 'From' | t }}">
+                                            </div>
+                                        </div>
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <input type="text" class="vesta-dp" name="bookListPackageDateTo" placeholder="{{ 'To' | t }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="eight wide field">
+                                    <label>{{ 'Order Date' | t }}</label>
+                                    <div class="two fields">
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <input type="text" class="vesta-dp" name="bookListPackageOrderDateFrom" placeholder="{{ 'From' | t }}">
+                                            </div>
+                                        </div>
+                                        <div class="eight wide field">
+                                            <div class="ui mini input">
+                                                <input type="text" class="vesta-dp" name="bookListPackageOrderDateTo" placeholder="{{ 'To' | t }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <button type="submit" class="ui right floated button primary mini">{{ 'Search' | t }}</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="ui divider"></div>
+
+                <h2 class="title full-bottom-border no-line-under mb20">{{ 'Books List' | t }}</h2>
+                <table class="ui table selectable very basic striped">
+                    <thead class="hidden-mobile">
+                    <tr class="center aligned">
+                        <th>{{ '#' | t }}</th>
+                        <th>{{ 'Book Id' | t }}</th>
+                        <th>{{ 'Package Name' | t }}</th>
+                        <th>{{ 'Package Date' | t }}</th>
+                        <th>{{ 'Order Date' | t }}</th>
+                        <th>{{ 'Leader Email' | t }}</th>
+                        <th>{{ 'Passengers' | t }}</th>
+                        <th>{{ 'Price' | t }}</th>
+                        <th>{{ 'Status' | t }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in 0..10 %}
+                        <tr class="center aligned">
+                            <td class="aligned center">
+                                <strong class="show-mobile">{{ '#' | t }}: </strong> {{ testBookList.id }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Book Id' | t }}: </strong> {{ testBookList.tourPackageCode }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Package Name' | t }}: </strong> {{ testBookList.tourPackageName }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Package Date' | t }}: </strong> {{ testBookList.hotelPackageDate.hotelPackageStartDate | date("m/d/Y", false) }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Order Date' | t }}: </strong> {{ testBookList.creationDate | date("m/d/Y", false) }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Leader Email' | t }}: </strong>{{ testBookList.leaderInfo.email }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Passengers' | t }}: </strong>{{ testBookList.passengers | length }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Price' | t }}: </strong> {{ testBookList.price }}
+                            </td>
+                            <td>
+                                <strong class="show-mobile">{{ 'Status' | t }}: </strong> {{ testBookList.bookingStatus }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui attached tab segment clearfix" data-tab="personal-info">
+                <div class="ui grid divided p20 passengers-info stackable">
+                    <div class="six wide column">
+                        <div class="ui special cards">
+                            <div class="card ui fluid">
+                                <div class="blurring dimmable image">
+                                    <div class="ui inverted dimmer">
+                                        <div class="content">
+                                            <div class="center">
+                                                <div class="ui primary tiny basic button">{{ 'Change Picture' | t }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img class="rounded" src="https://semantic-ui.com/images/avatar2/large/matthew.png">
+                                </div>
+                            </div>
+                        </div>
+                        {#<div class="ui fluid image">#}
+                        {#<img class="rounded" src="https://semantic-ui.com/images/avatar2/large/matthew.png">#}
+                        {#</div>#}
+                    </div>
+                    <div class="ten wide column contact-info p20">
+                        <table class="ui very basic table">
+                            <tbody>
+                            <tr>
+                                <td class="six wide">
+                                    <p><strong>{{ 'Name' | t }}</strong></p>
+                                </td>
+                                <td class="ten wide">
+                                    <p>Farzad Mahanian</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>{{ 'Email' | t }}</strong></p>
+                                <td>
+                                    <p>f.mahanian@gmail.com</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>{{ 'Tell' | t }}</strong></p>
+                                <td>
+                                    <p>+982112345678</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>{{ 'Fax' | t }}</strong></p>
+                                <td>
+                                    <p>+982112345678</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>{{ 'Address' | t }}</strong></p>
+                                <td>
+                                    <p>No 10, Nour St, Africa BLV</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row pt40">
+                    <h2 class="title tac full-bottom-border no-line-under mb20">{{ 'Change Password' | t }}</h2>
+                    <form class="ui form" id="change-pass-form">
+                        <div class="field">
+                            <label>Current Password</label>
+                            <input type="text" name="first-name" placeholder="Current Password">
+                        </div>
+                        <div class="field">
+                            <label>New Password</label>
+                            <input type="text" name="last-name" placeholder="New Password">
+                        </div>
+                        <div class="field">
+                            <label>Confirm Password</label>
+                            <input type="text" name="last-name" placeholder="Confirm Password">
+                        </div>
+                        <button class="ui button primary basic right floated mini" type="submit">{{ 'Change Password' | t }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        {#<div class="ui grid segment">#}
+            {#<div class="four wide column tab-bar-section">#}
+                {#<div class="ui vertical fluid tabular menu">#}
+                    {#<a class="item active" data-tab="book-list">#}
+                        {#{{ 'Books List' | t }}#}
+                    {#</a>#}
+                    {#<a class="item" data-tab="personal-info">#}
+                        {#{{ 'Personal Info' | t }}#}
+                    {#</a>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="twelve wide stretched column">#}
+                {#<div class="ui tab active" data-tab="book-list">#}
+                    {#<h2 class="title full-bottom-border no-line-under mb20">{{ 'Books List' | t }}</h2>#}
+                    {#<table class="ui table selectable very basic">#}
+                        {#<thead>#}
+                        {#<tr class="center aligned">#}
+                            {#<th>{{ '#' | t }}</th>#}
+                            {#<th>{{ 'Book Id' | t }}</th>#}
+                            {#<th>{{ 'Date' | t }}</th>#}
+                            {#<th>{{ 'Destination' | t }}</th>#}
+                            {#<th>{{ 'Passengers' | t }}</th>#}
+                            {#<th>{{ 'Status' | t }}</th>#}
+                        {#</tr>#}
+                        {#</thead>#}
+                        {#<tbody>#}
+                        {#{% for i in 0..10 %}#}
+                            {#<tr class="center aligned">#}
+                                {#<td class="aligned center">{{ loop.index }}</td>#}
+                                {#<td>IR-Tour{{ random(100000000) }}</td>#}
+                                {#<td>{{ "now"|date("m/d/Y") }}</td>#}
+                                {#<td>Tehran - Shiraz - Isfahan</td>#}
+                                {#<td>{{ random(2..7) }}</td>#}
+                                {#<td>UNPAID</td>#}
+                            {#</tr>#}
+                        {#{% endfor %}#}
+                        {#</tbody>#}
+                    {#</table>#}
+                {#</div>#}
+                {#<div class="ui tab" data-tab="personal-info">#}
+                    {#<div class="ui vertical segment with-no-border">#}
+                        {#<div class="ui two column center aligned divided grid m0 stackable">#}
+                            {#<div class="row">#}
+                                {#<div class="column passengers-info p20">#}
+                                    {#<div class="ui fluid image">#}
+                                        {#<img class="rounded" src="https://semantic-ui.com/images/avatar2/large/matthew.png">#}
+                                    {#</div>#}
+                                {#</div>#}
+                                {#<div class="column contact-info p20">#}
+                                    {#<table class="ui very basic table">#}
+                                        {#<tbody>#}
+                                        {#<tr>#}
+                                            {#<td class="six wide">#}
+                                                {#<p><strong>{{ 'Name' | t }}</strong></p>#}
+                                            {#</td>#}
+                                            {#<td class="ten wide">#}
+                                                {#<p>Farzad Mahanian</p>#}
+                                            {#</td>#}
+                                        {#</tr>#}
+                                        {#<tr>#}
+                                            {#<td>#}
+                                                {#<p><strong>{{ 'Email' | t }}</strong></p>#}
+                                            {#<td>#}
+                                                {#<p>f.mahanian@gmail.com</p>#}
+                                            {#</td>#}
+                                        {#</tr>#}
+                                        {#<tr>#}
+                                            {#<td>#}
+                                                {#<p><strong>{{ 'Tell' | t }}</strong></p>#}
+                                            {#<td>#}
+                                                {#<p>+982112345678</p>#}
+                                            {#</td>#}
+                                        {#</tr>#}
+                                        {#<tr>#}
+                                            {#<td>#}
+                                                {#<p><strong>{{ 'Fax' | t }}</strong></p>#}
+                                            {#<td>#}
+                                                {#<p>+982112345678</p>#}
+                                            {#</td>#}
+                                        {#</tr>#}
+                                        {#<tr>#}
+                                            {#<td>#}
+                                                {#<p><strong>{{ 'Address' | t }}</strong></p>#}
+                                            {#<td>#}
+                                                {#<p>No 10, Nour St, Africa BLV</p>#}
+                                            {#</td>#}
+                                        {#</tr>#}
+                                        {#</tbody>#}
+                                    {#</table>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="row pt40">#}
+                        {#<h2 class="title tac full-bottom-border no-line-under mb20">{{ 'Change Password' | t }}</h2>#}
+                        {#<form class="ui form" id="change-pass-form">#}
+                            {#<div class="field">#}
+                                {#<label>Current Password</label>#}
+                                {#<input type="text" name="first-name" placeholder="Current Password">#}
+                            {#</div>#}
+                            {#<div class="field">#}
+                                {#<label>New Password</label>#}
+                                {#<input type="text" name="last-name" placeholder="New Password">#}
+                            {#</div>#}
+                            {#<div class="field">#}
+                                {#<label>Confirm Password</label>#}
+                                {#<input type="text" name="last-name" placeholder="Confirm Password">#}
+                            {#</div>#}
+                            {#<button class="ui button primary basic right floated mini" type="submit">{{ 'Change Password' | t }}</button>#}
+                        {#</form>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    </div>
+</article>

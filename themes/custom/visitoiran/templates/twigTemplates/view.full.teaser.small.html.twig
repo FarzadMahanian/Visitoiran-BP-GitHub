@@ -1,0 +1,14 @@
+{% if gray is odd %}
+<div class="gray {{ gray_class }}">
+{% endif %}
+    <div class="content">
+        {% if title|length > 0 %}
+            <h1 class="title tac">
+                {{ title | t }}
+            </h1>
+        {% endif %}
+        {{ view }}
+    </div>
+{% if gray is odd %}
+</div>
+{% endif %}

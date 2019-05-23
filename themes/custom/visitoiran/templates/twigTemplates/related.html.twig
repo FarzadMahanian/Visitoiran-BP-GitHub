@@ -1,0 +1,34 @@
+{% if items is empty %}
+    {% set items = content.field_related %}
+    {% set title = true %}
+{% endif %}
+{% if title is empty %}
+    {% set title = 'Related Contents' %}
+{% endif %}
+{% if not show_title %}
+    {% set display_title = false %}
+{% else %}
+    {% set display_title = true %}
+{% endif %}
+{% if items['#items']|length > 1 %}
+    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+    'nobody' : true,
+    'title_value' : title,
+    'gray': gray,
+    'body' : items,
+    'show_title' : display_title,
+    'title_link' : link,
+    'content_class' : 'o-visible',
+    'body_class' : 'mtb o-visible tac',
+    'attr': 'item-count=' ~ items['#items']|length
+    } %}
+{% else %}
+    {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+    'nobody' : true,
+    'title_value' : title,
+    'gray': gray,
+    'body' : drupal_entity('node', items['#object'].id, 'four_wide_main'),
+    'show_title' : display_title,
+    'title_link' : link
+    } %}
+{% endif %}

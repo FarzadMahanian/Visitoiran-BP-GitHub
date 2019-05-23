@@ -1,0 +1,63 @@
+<article{{ attributes }}>
+
+    <div class="content-wrapper with-quick-facts">
+
+        {#Main Picture & Quick Facts#}
+        <div class="pattern">
+            <div class="content">
+                <div class="quick-facts-image">
+                    {{ content.field_image }}
+
+                    {#Image Galerry#}
+                    {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' with {
+                    short_class: 'short'
+                    } %}
+                </div>
+                <div class="quick-facts">
+                    <h1 class="title">{{ label }}</h1>
+                    {% if
+                    content.field_national_code|render or
+                    content.field_unesco_code|render or
+                    content.field_visit_time|render
+                    is not empty
+                    %}
+                    <ul class="content-padding">
+                        <li>{{ content.field_national_code }}</li>
+                        <li>{{ content.field_unesco_code }}</li>
+                        <li>{{ content.field_visit_time }}</li>
+                    </ul>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        {#Description Body#}
+        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+        'title_value' : node.title.value,
+        'body' : content.body,
+        'green': true,
+        'show_title' : true
+        } %}
+
+        {#Description Body#}
+        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+        title_name: 'accessibility',
+        'body' : content.field_accessibility,
+        'gray': true,
+        'show_title' : true
+        } %}
+
+        {#Destinations#}
+        {% include directory ~ '/templates/twigTemplates/view.full.teaser.small.html.twig' with {
+        view : destinations,
+        title : 'Destinations',
+        black: true
+        } %}
+
+        {#Map#}
+        {% include directory ~ '/templates/twigTemplates/map.html.twig' %}
+
+    </div>
+
+</article>

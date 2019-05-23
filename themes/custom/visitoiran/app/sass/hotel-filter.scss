@@ -1,0 +1,154 @@
+@import 'variables/vars';
+@import 'lib/base';
+
+$fade-color : rgba(255,255,255,0.6);
+$fade-error-color : rgba(255,224,224,0.4);
+$border-radius: 3px;
+$gutter: 10px;
+
+.hotel-filter-section {
+
+    height: 33em;
+    background-image: url(../images/hotel-back.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    h2 {
+        text-align: center;
+        font-size: 2.5em;
+        padding: 1.5em 0 1em 0;
+        color: $base-color;
+    }
+}
+.filter-wrapper {
+
+    &.home-page-filter {
+        @include grid-span(10, 2);
+        @include breakpoint($tablet) {
+            @include grid-span(6, 4);
+        }
+    }
+
+    .icon.visito-blue {
+        background-color: transparent;
+        opacity: 0.7;
+        color: $base-color !important;
+    }
+
+    a {
+        cursor: pointer;
+    }
+
+    .all-link {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .tac {
+        margin-top: 30px;
+    }
+
+    .ui.search {
+        width: 100%;
+        &>.results {
+            .result {
+                .title {
+                    font-weight: normal;
+                }
+                .icon {
+                    color: silver;
+                }
+                &.active {
+                    .icon {
+                        font-weight: normal;
+                        color: #1D508D;
+                    }
+                }
+            }
+        }
+    }
+
+    div.results {
+        @include grid-span(12,1);
+    }
+
+    .checkin, .checkout {
+        width: 50%;
+        margin-top: $gutter;
+        margin-bottom: $gutter;
+    }
+
+    .checkin {
+        padding-right: $gutter/2;
+    }
+    .checkout {
+        padding-left:  $gutter/2;
+    }
+
+    input.handled {
+        border-radius: $border-radius !important;
+        background-color: $fade-color !important;
+        font-size: 12pt !important;
+        // color: white !important;
+
+        &.has-error {
+            background-color: $fade-error-color !important;
+        }
+    }
+
+    input.handled {
+        width: 100%;
+    }
+
+    .room-detail {
+        width: 100%;
+        .popup {
+            &::before {
+                background-color: #eee;
+            }
+            padding: 0px;
+            .rooms.table {
+                width: 400px !important;
+                th {
+                    padding: 0;
+                    line-height: 35pt;
+                    font-size: 11pt;
+                    background-color: #eee;
+                }
+                td {
+                    padding: 15px 5px;
+                }
+                .actions {
+                    width: 16px;
+                    button.add-room {
+                        z-index: 3;
+                        position: relative;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/***************************
+ *  semantic spinner       *
+ ***************************/
+
+ .spinner-cell {
+    width: 115px;
+    &>.ui.input {
+        width: 40px;
+        &>input {
+            padding-left: 3px;
+            padding-right: 3px !important;
+            padding-top: 5px;
+            text-align: center;
+            border-radius: 0;
+            padding-bottom: 8px;
+            color: black !important;
+            font-size: 10pt !important;
+            line-height: 10pt;
+        }
+    }
+}

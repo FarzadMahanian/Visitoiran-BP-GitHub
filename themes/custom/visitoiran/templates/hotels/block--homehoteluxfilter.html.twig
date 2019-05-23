@@ -1,0 +1,36 @@
+<div class="hotel-filter-section">
+    <h2>Search Hotels</h2>
+    <div class="filter-wrapper home-page-filter">
+        <div class="ui left search icon large input">
+            <input class="prompt handled" type="text" placeholder="Search Hotels">
+            <i class="search large icon blue visito-blue"></i>
+        </div>
+        <div>
+            <div class="ui input checkin big icon right">
+                <input type="text" class="handled" readonly placeholder="Checkin">
+                <i class="calendar large icon blue visito-blue"></i>
+            </div><!--
+            --><div class="ui input checkout icon big">
+                <input type="text" class="handled" readonly placeholder="Checkout">
+                <i class="calendar large icon blue visito-blue"></i>
+            </div>
+        </div>
+        <div>
+            <div class="ui right icon input room-detail">
+                <input type="text" class="handled" id="roomInfo" readonly value="">
+                <i class="users big icon blue visito-blue"></i>
+            </div>
+        </div>
+        <div class="all-link">
+            <a class="btn-search">Search</a>
+        </div>
+        <div class="tac">
+            <a class="see-all" href="http://www.visitoiran.local/package/all">See All</a>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        initHotelFilter($(".hotel-filter-section"));
+    })
+</script>

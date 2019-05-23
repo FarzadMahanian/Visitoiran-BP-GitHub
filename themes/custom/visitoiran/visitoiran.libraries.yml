@@ -1,0 +1,61 @@
+depending:
+  header: true
+  js:
+    'app/js/base.js': {}
+  dependencies:
+    - core/jquery
+
+visito-theme:
+  css:
+    theme:
+      app/css/autocomplete.css: {}
+      app/css/horizontal-menu.css: {}
+      app/lib/slick-carousel/slick/slick.css: {}
+      app/lib/slick-carousel/slick/slick-theme.css: {}
+      app/assets/semantic/semantic/dist/semantic.min.css: {}
+      app/lib/vestadatepicker/dist/css/VestaDatePicker.css: {}
+      app/css/packages.css: {}
+      app/css/hotel-filter.css: {}
+      app/css/hotels.css: {}
+      app/css/style.css: {}
+      app/css/print.css: { media: print }
+  js:
+    app/lib/jquery.jcarousellite/jcarousellite.min.js: {}
+    app/lib/slick-carousel/slick/slick.min.js: {}
+    app/lib/readmore-js/readmore.min.js: {}
+    app/assets/semantic/semantic/dist/semantic.min.js: {}
+    app/lib/vestadatepicker/dist/js/VestaDatePicker.full.min.js: {}
+    app/lib/jquery.stellar/jquery.stellar.min.js: {}
+    app/scripts/semantic-spinner.js: {}
+    app/scripts/hotel-filter.js: {}
+    app/lib/vue/dist/vue.min.js: {}
+    app/js/main.js: {}
+  dependencies:
+    - core/jquery
+
+visito-theme-rtl:
+  css:
+    theme:
+      app/lib/vestadatepicker/dist/css/VestaDatePicker.css: {}
+      app/assets/semantic/semantic/dist/semantic.rtl.min.css: {}
+      app/css/packages-rtl.css: {}
+      app/css/hotels-rtl.css: {}
+      app/css/style-rtl.css: {}
+      app/css/horizontal-menu-rtl.css: {}
+
+visito-theme-production:
+  css:
+    theme:
+      app/css/packages.css: {}
+      app/css/hotels.css: {}
+      dist/css/style.css: {}
+  js:
+    dist/lib/jquery.jcarousellite/jcarousellite.min.js: {}
+    dist/lib/slick-carousel/slick/slick.min.js: {}
+    dist/lib/readmore-js/readmore.min.js: {}
+    app/lib/vestadatepicker/dist/js/VestaDatePicker.full.min.js: {}
+    dist/lib/jquery.stellar/jquery.stellar.min.js: {}
+    dist/js/main.js: {}
+  dependencies:
+    - core/jquery
+

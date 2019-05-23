@@ -1,0 +1,15 @@
+name: Religous
+type: theme
+description: Religous awesome theme.
+package: Religous
+core: 8.x
+
+libraries:
+  - religous/religous-theme
+
+base theme: classy
+regions:
+  header: Header
+  slideshow: Slideshow
+  content: Content
+  footer: Footer

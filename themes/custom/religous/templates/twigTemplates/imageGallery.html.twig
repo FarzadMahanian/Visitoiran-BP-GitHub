@@ -1,0 +1,42 @@
+{% if custom %}
+    {% set content_photos = package.gallery %}
+    {% set node_photos = package.gallery %}
+    {% set render = package.gallery %}
+{% else %}
+    {% set content_photos = content.field_photos %}
+    {% set node_photos = node.field_photos %}
+    {% set render = content_photos|render %}
+{% endif %}
+
+{% if render is not empty %}
+    <div class="image-gallery gray-darker tac {{ short_class }}">
+        {% if node_photos | length > 4 %}
+            {% set class = 'carousel' %}
+        {% endif %}
+        {% if short_class is empty %}
+            {% set content_class = 'content' %}
+        {% endif %}
+        <div class="{{ content_class }} {{ class }}">
+            {% if custom %}
+                <div class="field--name-field-photos field--type-image">
+                    {% for image in content_photos %}
+                        <div class="field__item">
+                            <a href="{{ image_path }}{{ image.fileUploadedId }}">
+                                <img src="{{ image_path }}{{ image.fileUploadedId }}?w=140&h=105&c=true" alt="{{ image.title }}">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ content_photos }}
+            {% endif %}
+        </div>
+
+        {% if node_photos | length > 5 %}
+            <div class="rel">
+                <div class='prev'></div>
+                <div class='next'></div>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}

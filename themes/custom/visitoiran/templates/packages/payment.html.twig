@@ -1,0 +1,334 @@
+{% set paymentInfo = payment.response %}
+{% set image_path = bp_config.url ~ bp_config.image_path %}
+{% set package_path = url('<front>')['#markup'] ~ 'package' %}
+
+{#{{ dump(paymentInfo) }}#}
+
+<article id="payment-result" class="bg-gray-light">
+    <div class="ui container">
+        <div class="body-section">
+            {% if paymentInfo.status == 'FAILURE' %}
+                <div class="ui segment payment-error">
+                    <div class="ui icon error message medium">
+                        <i class="warning sign icon"></i>
+                        <div class="content">
+                            <div class="header">{{ 'Unsuccessful payment' | t }}!</div>
+                            <p>{{ 'Payment Reference Code: ' }}{{ paymentInfo.id }}</p>
+                        </div>
+                    </div>
+                    <div class="ui center aligned container pt40">
+                        <a href="/package/userHome" class="ui button primary medium round">{{ 'Books List' | t }}</a>
+                    </div>
+                </div>
+            {% else %}
+                {% if not payment.login %}
+                    <div class="ui segment payment-error">
+                        <div class="ui icon success message medium">
+                            <i class="checkmark icon"></i>
+                            <div class="content">
+                                <div class="header">{{ 'Successful payment' | t }}!</div>
+                                <p>{{ 'Your Tour Package Booked Successfully' | t }}</p>
+                                <p>{{ 'Your Voucher has Sent to Your Email' | t }}.</p>
+                            </div>
+                        </div>
+                        <div class="ui center aligned container pt40">
+                            <a href="/package/userHome" class="ui button primary medium round">{{ 'Books List' | t }}</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="confirmation-info not-to-print">
+                        <div class="ui success message small">
+                            <div class="header">{{ 'Your Tour Package Booked Successfully' | t }}.</div>
+                            <p>{{ 'Your Voucher has Sent to Your Email' | t }}.</p>
+                            <p><strong>{{ 'Please Print your Voucher' | t }}.</strong></p>
+                        </div>
+                    </div>
+                    <div class="ui segment voucher to-print">
+                        <div class="header-section">
+                            <div class="title">{{ 'Voucher' | t }}</div>
+                        </div>
+                        <div class="ui vertical segment with-no-border print-p0 print-m0">
+                            <div class="ui two column center aligned divided grid m0 stackable">
+                                <div class="row print-p0 print-m0">
+                                    <div class="column tour-info p20">
+                                        <h4 class="ui horizontal header divider">
+                                            {{ 'Tour Information' | t }}
+                                        </h4>
+                                        <table class="ui very basic collapsing striped celled table">
+                                            <tbody>
+                                            <tr>
+                                                <td class="six wide">
+                                                    <p><strong>{{ 'Tour Name' | t }}</strong></p>
+                                                </td>
+                                                <td class="ten wide">
+                                                    <p>{{ paymentInfo.name }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Start Date' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.hotelPackageDate.hotelPackageStartDate | date("D M m/d/Y", false) }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Duration' | t }}</strong></p>
+                                                <td>
+                                                    <p>
+                                                        {{ paymentInfo.duration }}
+                                                            <span> {{ 'Day' | t }}{% if paymentInfo.duration > 1 %}{{ 's' | t }}{% endif %}</span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Package Code' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.packageCode }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Destinations' | t }}</strong></p>
+                                                <td>
+                                                    <p>
+                                                        {% set currentCity = paymentInfo.itineraries[0].city.name %}
+                                                        <span class="destination">{{ paymentInfo.itineraries[0].city.name }}</span>
+                                                        {% for itinerary in paymentInfo.itineraries %}
+                                                            {% if currentCity != itinerary.city.name %}
+                                                                {% set currentCity = itinerary.city.name %}
+                                                                <span class="destination">{{ itinerary.city.name }}</span>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="column hotel-info p20">
+                                        <h4 class="ui horizontal header divider">
+                                            {{ 'Hotel Information' | t }}
+                                        </h4>
+                                        <table class="ui very basic collapsing striped celled table">
+                                            <tbody>
+                                            <tr>
+                                                <td class="six wide">
+                                                    <p><strong>{{ 'Hotel Name' | t }}</strong></p>
+                                                </td>
+                                                <td class="ten wide">
+                                                    <p>
+                                                        {% for hotel in paymentInfo.hotelPackageDate.hotelPackage.hotels %}
+                                                            <span class="hotel">{{ hotel.name }}</span>
+                                                        {% endfor %}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Type' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.hotelPackageDate.hotelPackage.boardType }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Stars' | t }}</strong></p>
+                                                <td>
+                                                    <p>
+                                                    <div class="ui star rating"
+                                                         data-rating="{{ paymentInfo.hotelPackageDate.hotelPackage.star }}"
+                                                         data-max-rating="5"></div>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Rooms' | t }}</strong></p>
+                                                <td>
+                                                    {% for room in paymentInfo.rooms %}
+                                                        {% if room.numberOfRooms > 0 %}
+                                                            <p>{{ room.romeType.name }} x {{ room.numberOfRooms }}</p>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui vertical segment with-no-border print-p0 print-m0">
+                            <div class="ui two column center aligned divided grid m0 stackable">
+                                <div class="row print-p0 print-m0">
+                                    <div class="column passengers-info p20">
+                                        <h4 class="ui horizontal header divider">
+                                            {{ 'Passengers Information' | t }}
+                                        </h4>
+                                        <table class="ui very basic collapsing striped celled table">
+                                            <tbody>
+                                            {% for passenger in paymentInfo.passengerInfo %}
+                                                <tr>
+                                                    <td class="six wide">
+                                                        <p><strong>{{ 'Passenger' | t }} {{ loop.index }}</strong></p>
+                                                    <td class="ten wide">
+                                                        <p>{{ passenger.firstName }} {{ passenger.surName }}</p>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="column contact-info p20">
+                                        <h4 class="ui horizontal header divider">
+                                            {{ 'Contact Information' | t }}
+                                        </h4>
+                                        <table class="ui very basic collapsing striped celled table">
+                                            <tbody>
+                                            <tr>
+                                                <td class="six wide">
+                                                    <p><strong>{{ 'Name' | t }}</strong></p>
+                                                </td>
+                                                <td class="ten wide">
+                                                    <p>{{ paymentInfo.leaderInfo.firstName }} {{ paymentInfo.leaderInfo.surName }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Email' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.leaderInfo.email }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Mobile' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.leaderInfo.mobile }}</p>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui vertical segment with-no-border print-p0 print-m0">
+                            <div class="ui two column center aligned divided grid m0 stackable">
+                                <div class="row print-p0 print-m0">
+                                    <div class="column passengers-info p20">
+                                        <h4 class="ui horizontal header divider">
+                                            {{ 'Payment Information' | t }}
+                                        </h4>
+                                        <table class="ui very basic collapsing striped celled table">
+                                            <tbody>
+                                            {% for paymentInfo in paymentInfo.paymentInfo %}
+                                                <tr>
+                                                    <td class="six wide">
+                                                        <p><strong>{{ 'Status' | t }}</strong></p>
+                                                    <td class="ten wide">
+                                                        <p>{{ paymentInfo.paymentStatus }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p><strong>{{ 'Total Price' | t }}</strong></p>
+                                                    <td>
+                                                        <p>{{ paymentInfo.totalPrice | number_format }} {{ paymentInfo.currency }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p><strong>{{ 'Date' | t }}</strong></p>
+                                                    <td>
+                                                        <p>{{ paymentInfo.paymentDate | date("D M m/d/Y", false) }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p><strong>{{ 'Refrence Code' | t }}</strong></p>
+                                                    <td>
+                                                        <p>{{ paymentInfo.referenceCode }}</p>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="column contact-info p20">
+                                        <h4 class="ui horizontal header divider">
+                                            {{ 'Agency Information' | t }}
+                                        </h4>
+                                        <table class="ui very basic collapsing striped celled table">
+                                            <tbody>
+                                            <tr>
+                                                <td class="six wide">
+                                                    <p><strong>{{ 'Name' | t }}</strong></p>
+                                                </td>
+                                                <td class="ten wide">
+                                                    <p>{{ paymentInfo.agencyName }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Tell' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.agencyTell }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Fax' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.agencyFax }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Email' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.agencyEmail }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><strong>{{ 'Address' | t }}</strong></p>
+                                                <td>
+                                                    <p>{{ paymentInfo.agencyAddress }}</p>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui basic segment">
+                            <div class="row">
+                                <h4 class="ui horizontal header divider">
+                                    {{ 'Cancellation Policy' | t }}
+                                </h4>
+                                <div class="cancellation-policy">
+                                    {% autoescape %}
+                                        {{ paymentInfo.cancellationPolicy | raw }}
+                                    {% endautoescape %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ui p20 not-to-print center aligned container">
+                            <button class="ui basic button primary small round" onclick="window.print()">
+                                <i class="icon print"></i>
+                                {{ 'Print' | t }}
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</article>

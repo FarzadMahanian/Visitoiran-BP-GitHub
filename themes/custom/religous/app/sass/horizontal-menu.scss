@@ -1,0 +1,31 @@
+@import 'variables/vars';
+
+ul#horizontal-menu {
+  li.menu-item {
+    list-style: none;
+    ul {
+      margin: 0;
+      list-style: none;
+      border-radius: 3px;
+    }
+  }
+
+  > li.menu-item {
+    padding-bottom: 7px;
+    ul {
+        li {
+            background-color: #fff;
+        }
+      margin-left: 1em;
+      border-top: 3px solid $base-color;
+      border-radius: 0;
+      bottom: 0;
+      left: 0;
+      ul {
+        margin-left: 0;
+        left: 100%;
+        border: none;
+      }
+    }
+  }
+}

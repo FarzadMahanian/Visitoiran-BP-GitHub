@@ -1,0 +1,177 @@
+getFile:
+    path: /direct/{id}
+    defaults:
+        _controller: Drupal\hubber\Controller\FileController::getDirect
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+userHome:
+    path: /package/userHome
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::getUserProfile
+        _title: 'User Profile'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+login:
+    path: /package/login
+    methods: ['POST']
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::login
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+home:
+    path: /package/home
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::loginPage
+        _title: 'Login'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+getPackages:
+    path: /package/all
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::getPackages
+        _title: 'Packages'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+getTopPackages:
+    path: /package/top
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::getTopPackages
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+getPackage:
+    path: /package/{id}
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::getPackage
+        _title: 'Package'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+checkAvailability:
+    path: /package/checkAvailability
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::checkAvailability
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+books:
+    path: /package/books
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::books
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+pay:
+    path: /package/pay/{bookId}
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::pay
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+paymentComplete:
+    path: /payment
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::completePayment
+        _title: 'Payment Receipt'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+seeVoucher:
+    path: package/voucher/{bookId}
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::seeVoucher
+        _title: 'Package'
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+registerUser:
+    path: /package/user/register
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::registerUser
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+updateUser:
+    path: /package/user/update
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::updateUser
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+activate:
+    path: /package/user/activate
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::activate
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+resendActivation:
+    path: /package/user/resendActivation
+    defaults:
+        _controller: Drupal\hubber\Controller\PackageController::resendActivation
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+changePassword:
+    path: /package/user/changePassword
+    defaults:
+        _controller: Drupal\hubber\Controller\SecurityController::changePassword
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+resetPassword:
+    path: /package/user/resetPassword
+    defaults:
+        _controller: Drupal\hubber\Controller\SecurityController::resetPassword
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE
+
+resetPasswordRequest:
+    path: /package/user/resetPasswordRequest
+    defaults:
+        _controller: Drupal\hubber\Controller\SecurityController::resetPasswordRequest
+    requirements:
+        _permission: 'access content'
+    options:
+        no_cache: TRUE

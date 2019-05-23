@@ -1,0 +1,14 @@
+{
+  "name": "drupal/node_relations",
+  "type": "drupal-module",
+  "description": "Attach nodes and entity to each other.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/node_relations",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/node_relations",
+    "source": "http://cgit.drupalcode.org/node_relations"
+  },
+  "require": { }
+}

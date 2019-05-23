@@ -1,0 +1,428 @@
+@import 'variables/vars';
+@import 'lib/base';
+
+.hotel-filter-top.ui.form {
+
+  padding: 20px 30px 0;
+  @include breakpoint($tablet) {
+    padding: 20px 100px 0;
+  }
+  @include breakpoint($desktop) {
+    padding: 20px 300px 0;
+  }
+  .fields {
+    .field {
+      input, .button-row button {
+        @include breakpoint(768px) {
+          @include border-radius(0 !important);
+        }
+      }
+    }
+    .button-row {
+      button {
+        padding-top: 14px;
+      }
+    }
+    .filter-row {
+      @include breakpoint(768px) {
+        padding: 0 !important;
+      }
+    }
+    .two.fields {
+      .field:first-child {
+         @include breakpoint(768px) {
+           padding-right: 0 !important;
+         }
+       }
+      .field:last-child {
+        @include breakpoint(768px) {
+          padding-left: 0 !important;
+        }
+      }
+    }
+  }
+  .four.fields {
+    .hotel-row {
+      input {
+        @include breakpoint(768px) {
+          @include border-radius(5px 0 0 5px !important);
+        }
+      }
+    }
+    .button-row {
+      button {
+        @include breakpoint(768px) {
+          @include border-radius(0 5px 5px 0 !important);
+        }
+      }
+    }
+  }
+}
+
+.hotel-list-page {
+  padding: 20px 15px;
+  @include breakpoint($landscape) {
+    padding: 20px 50px;
+  }
+  @include breakpoint($tablet) {
+    padding: 20px 100px;
+  }
+  .title.with-no-border {
+    font-size: 27px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $second-color !important;
+    margin-bottom: 40px;
+  }
+}
+
+#hotel-filter {
+  .accordion {
+    box-shadow: none !important;
+  }
+}
+
+.hotels {
+  overflow: hidden;
+  $rate-color: rgb(198, 31, 71);
+  $star-color: #ffc206;
+  $row-height: 230px;
+  .title {
+    font-size: 27px;
+    color: $base-color;
+    &:after {
+
+    }
+  }
+  li {
+    min-height: $row-height;
+    background: $gray-color;
+    margin-top: 40px;
+    &:first-child {
+      margin-top: 0;
+    }
+    .description {
+      height: $row-height;
+      @include grid-span(10, 1, null, 0);
+      @include breakpoint(0 $tablet) {
+        @include grid-span(12, 1);
+      }
+      @include breakpoint($tablet $desktop) {
+        @include grid-span(9, 1, null, 0);
+      }
+      .info-box {
+        box-sizing: border-box;
+        height: inherit;
+        background: darken($gray-color, 4%);
+        position: relative;
+        > div, .simple-title {
+          overflow: hidden;
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+        .image {
+          padding: 0 !important;
+          margin: 0 !important;
+          width: $row-height;
+          height: $row-height;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          float: left;
+          @include breakpoint(0 $landscape) {
+            width: 100px;
+            height: 100px;
+            display: block;
+          }
+          @include breakpoint($landscape $tablet) {
+            width: 200px;
+            height: 100px;
+            display: block;
+          }
+        }
+      }
+      .simple-title {
+        font-size: 18px;
+      }
+      .stars {
+        padding: 5px;
+      }
+      .headline {
+        @include font-family(light);
+        color: darken($star-color, 18%);
+        margin-bottom: 1em;
+        font-size: 15px;
+        height: 20px;
+      }
+      .general-info {
+        height: 90px;
+        overflow: hidden;
+        @include font-family(light);
+        @include breakpoint(0 $tablet) {
+          padding-top: 10px;
+          height: 75px;
+          clear: both;
+        }
+      }
+      .location {
+        overflow: hidden;
+        color: $base-color;
+        position: relative;
+        bottom: 0;
+        height: 40px;
+        @include font-family(light);
+        @include icon(before, hotel-pin, 30px, 'HotelIcons'){
+          position: absolute;
+          top: 50%;
+          left: 7px;
+          right: auto;
+          @include translateY(-50%);
+        };
+        @include breakpoint(0 $tablet) {
+          bottom: -13px;
+        }
+        p {
+          max-height: 30px;
+          overflow: hidden;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 100%;
+          line-height: 1.3em;
+          padding-left: 50px;
+          padding-right: 15px;
+          @include translateY(-50%);
+        }
+      }
+      .rate {
+        position: absolute;
+        top: -7px;
+        right: 10px;
+        background: $rate-color;
+        width: auto;
+        color: #fff;
+        text-align: center;
+        overflow: visible !important;
+        padding: 10px 3px 5px !important;
+        font-size: 16px;
+        @include font-family(light);
+        @include border-radius(0 0 10px 10px);
+        &:before {
+          position: absolute;
+          content: "";
+          display: inline-block;
+          width: 0;
+          height: 0;
+          top: 0px;
+          right: auto;
+          /*rtl:ignore*/
+          left: -8px;
+          border: 4px solid darken($rate-color, 25%);
+          border-top-color: transparent;
+          border-left-color: transparent;
+        }
+      }
+    }
+    .last-section {
+      background: $gray-color;
+      padding: 10px;
+      height: $row-height;
+      position: relative;
+      @include grid-span(2, 11, null, 0);
+      @include breakpoint(0 $tablet) {
+        height: auto;
+        @include grid-span(12, 1);
+      }
+      @include breakpoint($tablet $desktop) {
+        @include grid-span(3, 10, null, 0);
+      }
+      .price-box {
+        @include breakpoint(0 $landscape) {
+          @include grid-span(6, 1);
+        }
+        @include breakpoint($landscape $tablet) {
+          @include grid-span(8, 1);
+        }
+        .text {
+          color: gray;;
+        }
+        .value {
+          color: $rate-color;
+          font-size: 18px;
+        }
+      }
+      .hotel-check-btn {
+        bottom: 15px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 10px;
+        font-size: 1vw;
+        @include breakpoint(0 $landscape) {
+          position: relative;
+          bottom: auto;
+          margin: 10px;
+          @include grid-span(6, 7);
+        }
+        @include breakpoint($landscape $tablet) {
+          position: relative;
+          bottom: auto;
+          margin: 10px;
+          @include grid-span(4, 9);
+        }
+        button {
+          background-color: $second-color;
+        }
+      }
+    }
+    &:last-child {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.hotel-page {
+  $rate-color: rgb(198, 31, 71);
+  .section {
+    padding: 50px 0;
+  }
+  .hotel-gallery {
+    .rate {
+      position: absolute;
+      top: 16px;
+      left: 30px;
+      right: auto;
+      z-index: 10;
+      background: $rate-color;
+      width: auto;
+      color: #fff;
+      text-align: center;
+      overflow: visible !important;
+      padding: 10px 7px 5px !important;
+      font-size: 16px;
+      @include font-family(light);
+      @include border-radius(0 0 10px 10px);
+    }
+    .picture {
+      width: 100%;
+      display: none;
+    }
+    .slider-for .picture:first-child {
+      display: block;
+    }
+  }
+  .right-column {
+    padding-left: 50px !important;
+    padding-right: 50px!important;
+  }
+  .price {
+    font-weight: normal;
+    font-size: 14px;
+    float: right;
+  }
+  .head-line {
+    font-size: 18px;
+  }
+  .eminency {
+    font-size: 14px;
+  }
+  .button {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    @include icon(before, hotel-tick, 21px, 'HotelIcons');
+  }
+  .properties {
+    height: 170px;
+    overflow: hidden;
+    ul, li {
+      list-style-type: disc;
+      list-style-position: inside;
+    }
+  }
+  .contactInfo {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    right: auto;
+    width: 100%;
+    .address {
+      color: gray;
+      font-size: 16px;
+      position: relative;
+      padding-left: 70px;
+      &.address {
+        @include icon(before, hotel-building, 33px, 'HotelIcons') {
+          position: absolute;
+          top: 50%;
+          left: 7px;
+          right: auto;
+          @include translateY(-50%);
+        };
+      }
+    }
+  }
+  .distance {
+    .ui.container .ui.stackable.column.grid {
+      .column {
+        font-size: 18px;
+        padding: 0 !important;
+        height: 100px;
+        .airport,
+        .subway,
+        .city-center {
+          padding-left: 60px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 260px;
+          @include translate(-50%, -50%);
+
+        }
+        .airport {
+          @include icon(before, hotel-dis-airport, 33px, 'HotelIcons') {
+            position: absolute;
+            top: 50%;
+            left: 7px;
+            right: auto;
+            color: $second-color;
+            @include translateY(-50%);
+          };
+        }
+        .subway {
+          @include icon(before, hotel-dis-subway, 33px, 'HotelIcons') {
+            position: absolute;
+            top: 50%;
+            left: 7px;
+            right: auto;
+            color: $second-color;
+            @include translateY(-50%);
+          };
+        }
+        .city-center {
+          @include icon(before, hotel-dis-center, 33px, 'HotelIcons') {
+            position: absolute;
+            top: 50%;
+            left: 7px;
+            right: auto;
+            color: $second-color;
+            @include translateY(-50%);
+          };
+        }
+        .rail {
+          padding-left: 40px;
+          @include icon(before, hotel-dis-rail, 33px, 'HotelIcons') {
+            position: absolute;
+            top: 50%;
+            left: 7px;
+            right: auto;
+            color: $second-color;
+            @include translateY(-50%);
+          };
+        }
+        .amount {
+          color: gray;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}

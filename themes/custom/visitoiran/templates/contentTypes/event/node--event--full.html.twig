@@ -1,0 +1,63 @@
+<article{{ attributes }}>
+
+    <div data-readmore-height="{{ node.field_readmore_height.value }}" class="content-wrapper full-main events">
+
+        {#Main Picture#}
+        <div class="title-color">
+            <div class="content">
+                {{ content.field_image }}
+                <h1 class="title tac">{{ label }}</h1>
+            </div>
+        </div>
+
+        {#Description Body#}
+        {% set zebra = 0 %}
+        {% for b in node.body %}
+            {% set show_title = false %}
+            {% set gray = false %}
+
+            {% if loop.index % 2 == 0 %}
+                {% set gray = true %}
+            {% endif %}
+
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'title_value' : node.title.value,
+            'body' :  b.value,
+            'body_class' : 'simple-border',
+            'gray' : gray,
+            'show_title' : false
+            } %}
+
+            {% set zebra = loop.index %}
+        {% endfor %}
+
+
+        {% if content.field_view_name|render is not empty %}
+            {#View#}
+            {% if zebra % 2 == 1 %}
+                <div class="gray">
+            {% endif %}
+            <div class="content render-view">
+                {% if content.field_view_title_text|render is not empty %}
+                <h1 class="title tac">
+                    {{ content.field_view_title_text }}
+                </h1>
+                    {% if node.field_see_all.value is not empty %}
+                        <div class="tac"><a class="see-all" href="{{ url('<front>') }}{{ node.field_see_all.value }}">{{ 'See All' | t }}</a></div>
+                    {% endif %}
+                {% endif %}
+                <div class="mtb">
+                    {{ staticView }}
+                </div>
+            </div>
+            {% if zebra % 2 == 1 %}
+                </div>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+    {#Hidden Inputs#}
+    <input type="hidden" id="photographer" value="{{ content.field_photographer[0]['#plain_text'] }}">
+
+</article>

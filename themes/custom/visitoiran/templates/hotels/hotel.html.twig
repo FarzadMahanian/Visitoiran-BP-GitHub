@@ -1,0 +1,158 @@
+{% set hotel = hotel.response %}
+{% set g = 0 %}
+
+{#{% if g is odd %}#}
+    {#<div class="gray">#}
+{#{% endif %}#}
+
+
+
+{#{% if g is odd %}#}
+    {#</div>#}
+{#{% endif %}#}
+{#{% set g = g + 1 %}#}
+
+<article{{ attributes }}>
+
+    <div class="content-wrapper full-main hotel-page">
+        <div class="section gray">
+            <div class="ui container">
+                <div class="ui stackable two column grid">
+                    <div class="six wide column left-column">
+                        {% if hotel.HotelImages|length > 0 %}
+                            <div class="hotel-gallery">
+                                {% if hotel.HotelSummary.GuestRate > 0 %}
+                                    <div class="rate">{{ 'Rate' | t }}<br>{{ hotel.HotelSummary.GuestRate }}</div>
+                                {% endif %}
+                                <div class="slider-for">
+                                    {% for image in hotel.HotelImages %}
+                                        <img class="picture" src="{{ hotel.ImageURL }}{{ image.HotelImageID }}"/>
+                                    {% endfor %}
+                                </div>
+                                <div class="slider-nav pt20">
+                                    {% for image in hotel.HotelImages %}
+                                        <img class="picture" src="{{ hotel.ImageURL }}{{ image.HotelImageID }}"/>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="ten wide column right-column">
+                        {% if hotel.HotelSummary.MinPrice > 0 %}
+                            <div class="ui green horizontal label price">{{ 'From' | t }} <strong>{{ hotel.HotelSummary.MinPrice | number_format }} {{ hotel.HotelSummary.RateCurrencyCode }}</strong></div>
+                        {% endif %}
+                        {% if hotel.HotelSummary.Name %}
+                            <h1 class="title with-no-border">{{ hotel.HotelSummary.Name }}</h1>
+                        {% endif %}
+                        {% if hotel.HotelSummary.HotelStar %}
+                            <div class="stars pt10">
+                                <div class="ui star rating" data-rating="{{ hotel.HotelSummary.HotelStar }}" data-max-rating="5"></div>
+                            </div>
+                        {% endif %}
+                        {% if hotel.HotelSummary.Headline %}
+                            <div class="head-line">{{ hotel.HotelSummary.Headline }}</div>
+                        {% endif %}
+                        {% if hotel.HotelDetail.Eminency %}
+                            <div class="eminency pt20">{{ hotel.HotelDetail.Eminency }}</div>
+                        {% endif %}
+
+
+                        {% set checkLink = hotel.HotelSummary.DeepLink|replace({'/fa/': '/en/'}) %}
+
+                        <a href="{{ checkLink }}" class="ui button teal round" target="_blank">{{ 'Check Avalability' | t }}</a>
+                        {#{% if hotel.HotelDetail.PropertyAmenities|length > 0 %}#}
+                            {#<div class="properties">#}
+                                {#<ul>#}
+                                {#{% for item in hotel.HotelDetail.PropertyAmenities %}#}
+                                    {#<li>{{ item }}</li>#}
+                                {#{% endfor %}#}
+                                {#</ul>#}
+                            {#</div>#}
+                        {#{% endif %}#}
+                        <div class="contactInfo">
+                            <div class="address">{{ hotel.HotelSummary.Address }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if g is odd %}
+            <div class="gray">
+        {% endif %}
+                <div class="section distance">
+                    <div class="ui container">
+                        <h1 class="title tac">{{ 'Distances and Essetials' | t }}</h1>
+                        <div class="ui stackable three column grid pt40">
+                            <div class="column">
+                                <div class="airport">{{ 'Distance to Airport' | t }} <p class="amount">{{ hotel.HotelDetail.DistanceToAirport }}{{ 'km' | t }}</p></div>
+                            </div>
+                            <div class="column">
+                                <div class="subway">{{ 'Distance to Subway' | t }} <p class="amount">{{ hotel.HotelDetail.DistanceToSubway }}{{ 'km' | t }}</p></div>
+                            </div>
+                            <div class="column">
+                                <div class="city-center">{{ 'Distance to City Center' | t }} <p class="amount">{{ hotel.HotelDetail.DistanceToCity }}{{ 'km' | t }}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% if g is odd %}
+            </div>
+        {% endif %}
+        {% set g = g + 1 %}
+
+        {% if hotel.HotelSummary.GeneralInfo %}
+            {% if g is odd %}
+                <div class="gray">
+            {% endif %}
+                    <div class="section description">
+                        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                        'title_name' : 'Description',
+                        'body' : hotel.HotelSummary.GeneralInfo,
+                        'show_title' : true
+                        } %}
+                    </div>
+            {% if g is odd %}
+                </div>
+            {% endif %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {% if hotel.HotelSummary.LocationInfo %}
+            {% if g is odd %}
+                <div class="gray">
+            {% endif %}
+                    <div class="section features">
+                        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                        'title_name' : 'Features',
+                        'body' : hotel.HotelSummary.LocationInfo,
+                        'show_title' : true
+                        } %}
+                    </div>
+            {% if g is odd %}
+                </div>
+            {% endif %}
+            {% set g = g + 1 %}
+        {% endif %}
+        <section class="map">
+            <div id="contacts">
+                <div id="google-map" class="{{ clazz }}" style="height: 430px;"></div>
+            </div>
+            {% set itemToGoogle = [] %}
+            {% set infoWindow %}<div>{{ hotel.HotelSummary.Name }}</div>{% endset %}
+            {% set itemToGoogle = itemToGoogle|merge([{
+            lat: hotel.HotelSummary.Latitude,
+            lng: hotel.HotelSummary.Longitude,
+            title: hotel.HotelSummary.Name,
+            infoWindowContent: infoWindow
+            }]) %}
+            {% include directory ~ '/templates/twigTemplates/google.map.script.html.twig' with {
+            points : itemToGoogle,
+            container_id : 'google-map',
+            address : 'infoWindowContent',
+            'title_class': 'full-bottom-border'
+            } %}
+        </section>
+    </div>
+
+</article>

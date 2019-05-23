@@ -1,0 +1,49 @@
+parameters:
+    hubber.connections:
+        timeout: 20
+        pms:
+            enabled: true
+            namespace: 'pms'
+            url: 'http://178.62.252.62:8000/'
+            api: 'pms/api/v1/'
+            token_path: 'http://stf_apps@178.62.252.62:8000/security/oauth/token'
+            paymentRedirection: 'financial/api/v1/ipg-pay?id='
+            login: '/package/home'
+            profile: '/package/userHome'
+            services:
+                getPackages: 'web/tourPackages'
+                getPackage: 'tourPackages' #{id}
+                checkAvailability: 'tourPackages/checkAvailability'
+                books: 'books'
+                paymentInitialize: 'initialize/payments' #{bookId}
+                paymentPay: 'initialize/payments' #{bookId}
+                vouchers: 'vouchers' #{bookId}
+                userInfo: 'users/details'
+                userBookList: 'books/user'
+                registerUser: 'users/register'
+                updateUser: 'users/update'
+                activate: 'users/activate'
+                resendActivation: 'users/resend_activation'
+        services:
+            namespace: 'services'
+            url: 'http://178.62.252.62:8000/'
+            api: 'services/'
+            services:
+                getFile: 'file' #{id}
+        security:
+            namespace: 'security'
+            token_path: 'http://stf_apps@178.62.252.62:8000/security/oauth/token'
+            url: 'http://178.62.252.62:8000/'
+            api: 'security/api/v1/'
+            services:
+                changePassword: 'users/password/change'
+                resetPassword: 'users/password/reset'
+                resetPasswordRequest: 'users/password/reset_request'
+
+services:
+    hubber.web_service:
+        class: Drupal\hubber\Services\WebService
+        arguments:
+            - '@keyvalue'
+            - '@logger.factory'
+            - '%hubber.connections%'

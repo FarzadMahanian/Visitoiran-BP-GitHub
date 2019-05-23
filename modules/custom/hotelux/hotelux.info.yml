@@ -1,0 +1,5 @@
+name: Hotelux
+type: module
+description: "Establish a connection between Visitoiran and Hotelux services."
+package: Visitoiran
+core: 8.x

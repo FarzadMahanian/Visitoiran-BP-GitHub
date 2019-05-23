@@ -1,0 +1,58 @@
+{#
+/**
+ * @file
+ * Theme override to display a taxonomy term.
+ *
+ * Available variables:
+ * - url: URL of the current term.
+ * - name: Name of the current term.
+ * - content: Items for the content of the term (fields and description).
+ *   Use 'content' to print them all, or print a subset such as
+ *   'content.description'. Use the following code to exclude the
+ *   printing of a given child element:
+ *   @code
+ *   {{ content|without('description') }}
+ *   @endcode
+ * - attributes: HTML attributes for the wrapper.
+ * - page: Flag for the full page state.
+ * - term: The taxonomy term entity, including:
+ *   - id: The ID of the taxonomy term.
+ *   - bundle: Machine name of the current vocabulary.
+ * - view_mode: View mode, e.g. 'full', 'teaser', etc.
+ *
+ * @see template_preprocess_taxonomy_term()
+ */
+#}
+{% if view_mode != 'author_content' %}
+<div{{ attributes }}>
+    <div class="full-main author">
+        <div class="interest">
+            <h1 class="title tac">{{ name }}</h1>
+            <div class="image">{{ content.field_image }}</div>
+            <div class="description">
+                <div class="body vbody">
+                    {% autoescape %}
+                        {{ content.description|raw }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+</div>
+{% else %}
+    <div class="in-box">
+        <h3 class="title">
+            <span>{{ 'Author' | t }}</span>
+        </h3>
+        <div class="profile-info">
+            {{ content.field_image }}
+            <div class="description">
+                <h4><a href="{{ url }}">{{ name }}</a></h4>
+                {% autoescape %}
+                    {{ content.description|raw }}
+                {% endautoescape %}
+            </div>
+        </div>
+    </div>
+{% endif %}

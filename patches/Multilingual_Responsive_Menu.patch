@@ -1,0 +1,19 @@
+Index: modules/responsive_menu/src/Plugin/Block/HorizontalMenu.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- modules/responsive_menu/src/Plugin/Block/HorizontalMenu.php	(date 1485334849000)
++++ modules/responsive_menu/src/Plugin/Block/HorizontalMenu.php	(revision )
+@@ -65,6 +65,11 @@
+     $depth = \Drupal::config('responsive_menu.settings')->get('horizontal_depth');
+     $menu_name = \Drupal::config('responsive_menu.settings')->get('horizontal_menu');
+ 
++      if (\Drupal::languageManager()->getCurrentLanguage()->getId() != 'en') {
++          $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
++          $menu_name = $menu_name . "-" . $lang;
++      }
++
+     // Allow other modules to modify the menu name.
+     \Drupal::ModuleHandler()->alter('responsive_menu_horizontal_menu_name', $menu_name);
+ 

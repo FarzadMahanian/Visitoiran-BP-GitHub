@@ -1,0 +1,16 @@
+name: Visitoiran
+type: theme
+description: Visitoiran awesome theme.
+package: Visitoiran
+core: 8.x
+
+libraries:
+  - visitoiran/depending
+  - visitoiran/visito-theme
+
+base theme: classy
+regions:
+  header: Header
+  slideshow: Slideshow
+  content: Content
+  footer: Footer

@@ -1,0 +1,27 @@
+{
+  "name": "visitoiran",
+  "authors": [
+    "payam <horoofchin@tosan.com>"
+  ],
+  "description": "Package manager of Visitoiran.",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "requirejs": "latest",
+    "compass-mixins": "^1.0.2",
+    "breakpoint-sass": "compass-breakpoint#^2.7.0",
+    "singularity": "singularitygs#^1.7.0",
+    "font-awesome": "fontawesome#^4.6.3",
+    "jquery.jcarousellite": "jquery-carousel-lite#^1.9.3",
+    "readmore-js": "readmore#^2.2.0",
+    "jquery-colorbox": "colorbox#^1.6.4",
+    "filament-sticky": "fixed-sticky#^0.1.7"
+  }
+}

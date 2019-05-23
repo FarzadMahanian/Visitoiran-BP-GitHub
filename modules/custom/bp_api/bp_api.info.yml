@@ -1,0 +1,5 @@
+name: BP API
+type: module
+description: Services from bp
+core: 8.x
+package: Custom

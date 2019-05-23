@@ -1,0 +1,18 @@
+{% if view['#rows'] is not empty %}
+    {% if black %}
+        <div class="black">
+    {% endif %}
+
+    <div class="content">
+        <h1 class="title">
+            {{ title | t }}
+        </h1>
+        <div class="mtb">
+            {{ view }}
+        </div>
+    </div>
+
+    {% if black %}
+        </div>
+    {% endif %}
+{% endif %}

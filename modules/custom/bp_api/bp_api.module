@@ -1,0 +1,118 @@
+<?php
+use Drupal\Core\Config\Config;
+use Drupal\Core\Site\Settings;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
+/**
+ * @file
+ * Contains bp_api.module..
+ */
+function getOauthToken() {
+    $bp = Settings::get('business-profiler');
+    if (!$bp['enabled']) {
+        return FALSE;
+    }
+
+    $oauth = \Drupal::state()->get('bp_oauth');
+    if (isset($oauth)) {
+//        return $oauth;
+    }
+    $client = new Client();
+    try {
+        $request = $client->request('POST', $bp['token_path'], [
+            'form_params' => [
+                'grant_type' => 'password',
+                'username' => $bp['username'],
+                'password' => $bp['password']
+            ]
+        ]);
+        $oauth = json_decode($request->getBody());
+        \Drupal::state()->set('bp_oauth', $oauth);
+        return $oauth;
+    } catch (RequestException $e) {
+        watchdog_exception('bp_api', $e, $e->getMessage());
+    }
+}
+
+function getService($name) {
+    $services = Settings::get('business-profiler')['services'];
+    return $services[$name];
+}
+
+function call($service, $query = NULL, $id = NULL) {
+
+    $bp = Settings::get('business-profiler');
+    if (!$bp['enabled']) {
+        return FALSE;
+    }
+
+    $config = [
+        'base_uri' => $bp['url'] . $bp['api'],
+        'timeout' => $bp['timeout']
+    ];
+
+    if (!empty($id)) {
+        $service .= '/' . $id;
+    }
+
+    $client = new Client($config);
+
+    try {
+        $request = $client->request('GET', $service, [
+            'headers' => ["Authorization" => "bearer " . getOauthToken()->access_token],
+            'query' => $query
+        ]);
+        return json_decode($request->getBody());
+    } catch (RequestException $e) {
+        watchdog_exception('bp_api', $e, $e->getMessage());
+    }
+
+}
+
+function prepare_requert($service_name, $query, $url_params = NULL) {
+    $id = NULL;
+    if (isset($url_params)) {
+        $id = \Drupal::request()->get($url_params);
+        if (!isset($id)) {
+            // Error code is not valid
+            return NULL;
+        }
+    }
+
+    return call(getService($service_name), $query, $id);
+}
+
+/**
+ * Implements MODULE_preprocess_HOOK().
+ */
+function bp_api_preprocess_node(&$variables) {
+    $node = $variables['node'];
+    if ($variables['view_mode'] != 'full') {
+        return FALSE;
+    }
+    $variables['bp_config'] = Settings::get('business-profiler');
+    switch ($node->getTitle()) {
+
+        case 'Packages':
+            $query = [
+                'page' => 0,
+                'total' => 10,
+                'order' => 'id',
+                'direction' => 'asc'
+            ];
+            //$variables['packages'] = prepare_requert('getAllPackages', $query);
+            break;
+
+        case 'Package':
+            $variables['package'] = prepare_requert('getPackage', NULL, 'id');
+            break;
+    }
+}
+
+/**
+ * Implements MODULE_preprocess_HOOK().
+ */
+function bp_api_preprocess_block(&$variables) {
+
+}

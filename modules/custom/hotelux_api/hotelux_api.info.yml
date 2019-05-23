@@ -1,0 +1,5 @@
+name: Hotelux API
+type: module
+description: Services from hotelux.com
+core: 8.x
+package: Custom

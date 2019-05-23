@@ -1,0 +1,74 @@
+<article{{ attributes }}>
+
+    <div class="content-wrapper full-main">
+
+        {#Main Picture#}
+        <div class="pattern">
+            <div class="content main-title tac">
+                {{ content.field_image }}
+                <h1 class="title tac no-eslimi no-line-under">{{ label }}</h1>
+            </div>
+        </div>
+
+        {#Image Galerry#}
+        {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' %}
+
+        {#Description Body#}
+        {% set zebra = 0 %}
+        {% for b in node.body %}
+            {% set show_title = false %}
+            {% set gray = false %}
+
+            {% if loop.index % 4 == 0 %}
+                {% set gray = false %}
+                {% set green = false %}
+            {% endif %}
+            {% if loop.index % 4 == 1 %}
+            {% endif %}
+            {% if loop.index % 4 == 2 %}
+                {% set gray = true %}
+                {% set green = false %}
+            {% endif %}
+            {% if loop.index % 4 == 3 %}
+                {% set gray = false %}
+                {% set green = true %}
+            {% endif %}
+
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'title_value' : node.title.value,
+            'body' :  b.value,
+            'body_class' : 'h2-bold',
+            'gray' : gray,
+            'show_title' : false
+            } %}
+
+            {% set zebra = loop.index %}
+        {% endfor %}
+
+
+        {% if content.field_view_name|render is not empty %}
+            {#View#}
+            {% if zebra % 2 == 1 %}
+                <div class="gray">
+            {% endif %}
+            <div class="content render-view">
+                {% if content.field_view_title_text|render is not empty %}
+                <h1 class="title">
+                    {{ content.field_view_title_text }}
+                </h1>
+                    {% if node.field_see_all.value is not empty %}
+                    {% endif %}
+                {% endif %}
+                <div class="mtb">
+                    {{ staticView }}
+                </div>
+                <div class="tac"><a class="see-all" href="{{ url('<front>') }}{{ node.field_see_all.value }}">{{ 'See All' | t }}</a></div>
+            </div>
+            {% if zebra % 2 == 1 %}
+                </div>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+</article>

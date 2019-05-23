@@ -1,0 +1,31 @@
+<article{{ attributes }}>
+
+    <div data-readmore-height="{{ node.field_readmore_height.value }}" class="content-wrapper full-main static-page contact-us">
+
+        {#Main Picture#}
+        {% if content.field_image|render is not empty %}
+            {% set back_cls = 'gray' %}
+            {% set content_cls = 'main-title tac' %}
+        {% else %}
+            {% set back_cls = 'title-color' %}
+        {% endif %}
+        <div class="{{ back_cls }}">
+            <div class="content {{ content_cls }}">
+                {{ content.field_image }}
+                <h1 class="title tac">{{ label }}</h1>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="vbody half-left">
+                <h3 class="our-office">
+                    {{ 'Our Office' | t }}
+                </h3>
+                {{ content.body[0] }}
+            </div>
+            <div class="half-right"></div>
+        </div>
+
+    </div>
+
+</article>

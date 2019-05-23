@@ -1,0 +1,156 @@
+{% set image_path = bp_config.url ~ bp_config.image_path %}
+<article{{ attributes }}>
+
+    <div class="content-wrapper package with-quick-facts">
+
+        {#Main Picture & Quick Facts#}
+        <div class="gray pos-r">
+            <div class="content">
+                <div class="field--name-field-image">
+                    <img src="{{ image_path }}{{ package.logo.fileUploadedId }}?w=512&h=350&c=true" alt="{{ package.title }}">
+                </div>
+                <div class="quick-facts">
+                    <h1 class="bundle-title tac">{{ package.title }}</h1>
+                    <div class="package-price start-price">
+                        <div class="field__label">{{ 'Start Price' | t }}</div>
+                        <div class="field__item">{{ package.priceGroups[0].price|number_format }}</div>
+                        <span class="shadow"></span>
+                    </div>
+                    <ul>
+                        {% if package.duration is not empty %}
+                            {% embed directory ~ '/templates/twigTemplates/field.item.label.html.twig' with {
+                            class : 'field--name-field-duration',
+                            label : ''
+                            } %}
+                                {% block label %}
+                                    {{ 'Duration' | t }}
+                                {% endblock %}
+                                {% block item %}
+                                    {{ package.duration }} {{ 'Days' | t }}
+                                {% endblock %}
+                            {% endembed %}
+                        {% endif %}
+
+                        <li>
+                            <div class="field field--name-field-departure">
+                                <div class="field__label">{{ 'Departure Time' | t }}</div>
+                                {% for date in package.startDates %}
+                                    <div class="field__item">{{ date.startDate | format_date }}</div>
+                                {% endfor %}
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="field field--name-field-age">
+                                <div class="field__label">{{ 'Age Limit' | t }}</div>
+                                <div class="field__item">{{ package.ageRequirement }} {{ 'Years' | t }}</div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="field field--name-field-package-country">
+                                <div class="field__label">{{ 'Country' | t }}</div>
+                                <div class="field__item">{{ package.country.englishName }}</div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="field field--name-field-city">
+                                <div class="field__label">{{ 'City' | t }}</div>
+                                <div class="field__item">{{ package.city.englishName }}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {#Image Galerry#}
+        {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' with {'custom': true} %}
+
+        {#Agency#}
+        {% set href = path('<front>') ~ '/page/agency?agency=' ~ package.agency.groupId %}
+        <div class="content">
+            <div class="interest">
+                <a href="{{ href }}">
+                    <div class="image x100"><img src="{{ image_path }}{{ package.agency.logoId }}?w=100&h=100&c=true" alt="{{ package.agency.title }}"></div>
+                </a>
+                <div class="description">
+                    <a href="{{ href }}">
+                        <h2 class="title-text no-line-under">{{ package.agency.title }}</h2>
+                    </a>
+                    <div class="body">
+                        {% autoescape %}
+                            {{ package.agency.description|brief_text(500)|raw }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#Description Body#}
+        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+        'title_name' : 'descriptions',
+        'body' : package.description,
+        'gray' : true,
+        'show_title' : true
+        } %}
+
+        {#Map#}
+        <div id="contacts" class="gray">
+            <div id="google-map" class="{{ clazz }}" style="height: 430px;"></div>
+        </div>
+
+        {#Itineraries#}
+        {% embed directory ~ '/templates/twigTemplates/body.html.twig' with {
+        'title_name' : 'itineraries',
+        'show_title' : true
+        } %}
+            {% block body %}
+                <ul class="itineraries">
+                    {% for itinerary in package.itineraries %}
+                        <li class="itinerary">
+                            <div class="number-bullet pos-r tac">
+                                <div class="name">
+                                    {{ itinerary.title }}
+                                </div>
+                                <div class="number">
+                                    {{ loop.index }}
+                                </div>
+                            </div>
+                            {% autoescape %}
+                                <div class="description">
+                                    {{ itinerary.description|raw }}
+                                </div>
+                            {% endautoescape %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endblock %}
+        {% endembed %}
+
+        {#Cancellation#}
+        {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+        'title_name' : 'cancellation policy',
+        'body' : package.cancelPolicy,
+        'gray' : true,
+        'show_title' : true
+        } %}
+
+        {#Packages#}
+        {% include directory ~ '/templates/twigTemplates/packages.teaser.html.twig' with {
+        packages : package.relatedPackages,
+        title : 'related packages'
+        } %}
+
+    </div>
+
+    {#Map#}
+    {% include directory ~ '/templates/twigTemplates/google.map.script.html.twig' with {
+    points : package.itineraries,
+    container_id : 'google-map',
+    address : 'title'
+    } %}
+
+
+</article>

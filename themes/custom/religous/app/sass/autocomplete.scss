@@ -1,0 +1,26 @@
+.autocomplete__list {
+    border-width: 1px 1px 0 1px;
+}
+
+.autocomplete__list__item {
+    border-width: 0 0 1px 0;
+    cursor: pointer;
+}
+
+.autocomplete.is-loading .autocomplete__input,
+.autocomplete__list__item--highlighted {
+    background-color: whitesmoke;
+
+}
+
+.autocomplete__list__item--disabled {
+    color: gray;
+    cursor: default;
+}
+
+.autocomplete__list__item__search-term {
+    background-color: khaki;
+}
+.payam {
+    width: 1000px;
+}

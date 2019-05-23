@@ -1,0 +1,223 @@
+{% set g = 0 %}
+<article{{ attributes }}>
+
+    <div class="content-wrapper full-main">
+
+        {#Main Picture#}
+        {% if content.field_image|render is not empty %}
+            {% set back_cls = 'gray' %}
+            {% set content_cls = 'main-title tac' %}
+        {% else %}
+            {% set back_cls = 'title-color' %}
+        {% endif %}
+        <div class="{{ back_cls }}">
+            <div class="content {{ content_cls }}">
+                {{ content.field_image }}
+                <h1 class="title tac">
+                    {{ label }}
+                    {% if content.field_slogan|render is not empty %}
+                        <div class="slogan">{{ content.field_slogan }}</div>
+                    {% endif %}
+                </h1>
+            </div>
+        </div>
+
+        {#Image Galerry#}
+        {% include directory ~ '/templates/twigTemplates/imageGallery.html.twig' %}
+
+
+        {#Description Body#}
+        {% if node.body|length > 0 %}
+            {% for b in node.body %}
+                {% set show_title = false %}
+
+                {% set element = b.value | format_body %}
+
+                {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+                'title_value' : node.title.value,
+                'body' : element,
+                'gray' : g,
+                'show_title' : false
+                } %}
+                {% set g = g + 1 %}
+            {% endfor %}
+        {% endif %}
+
+        {% if
+        content.field_mountain_equipment|render is not empty
+        or
+        content.field_personal_equipment|render is not empty
+        or
+        content.field_car_equipment|render is not empty %}
+            {% if g is odd %}
+                <div class="gray">
+            {% endif %}
+            <div class="content">
+                <h1 class="title tac">{{ 'Equipments' | t }}</h1>
+                <ul class="tac pt40 comma-separated">
+                    {% if content.field_mountain_equipment|render is not empty %}
+                        <li class="eqs panel3th mountain">
+                            <h3 class="title-second-color">{{ 'Mountain Equipments' | t }}</h3>
+                            <div class="description">{{ content.field_mountain_equipment }}</div>
+                        </li>
+                    {% endif %}
+                    {% if content.field_personal_equipment|render is not empty %}
+                        <li class="eqs panel3th personal">
+                            <h3 class="title-second-color">{{ 'Personal Equipments' | t }}</h3>
+                            <div class="description">{{ content.field_personal_equipment }}</div>
+                        </li>
+                    {% endif %}
+                    {% if content.field_car_equipment|render is not empty %}
+                        <li class="eqs panel3th car">
+                            <h3 class="title-second-color">{{ 'Car Equipments' | t }}</h3>
+                            <div class="description">{{ content.field_car_equipment }}</div>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% if g is odd %}
+                </div>
+            {% endif %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Accessibility#}
+        {% if node.field_accessibility|length > 0 %}
+            {% if g is odd %}
+                {% set gray_cls = 'gray' %}
+            {% endif %}
+            <div class="{{ gray_cls }} tac accessibility">
+                <div class="content min200 vbody">
+                    <div class="content-padding tac">
+                        {{ content.field_accessibility }}
+                    </div>
+                </div>
+            </div>
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {% if node.field_visit_calender|length > 0 or node.field_rules|length > 0 or node.field_facilities|length > 0  %}
+            {% if g is odd %}
+            <div class="gray">
+            {% endif %}
+                {#Visit Calender#}
+                {% if node.field_visit_calender|length > 0 %}
+                    <div class="ui items content row-with-icon">
+                        <div class="item">
+                            <div class="row-icon visit-calender-icon"></div>
+                            <div class="content pl10">
+                                <h2 class="title no-line-under">{{ 'Visit Calender' | t }}</h2>
+                                <div class="vbody">
+                                    {{ content.field_visit_calender }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {#Rules#}
+                {% if node.field_rules|length > 0 %}
+                    <div class="ui items content row-with-icon">
+                        <div class="item">
+                            <div class="row-icon rules-icon"></div>
+                            <div class="content pl10">
+                                <h2 class="title no-line-under">{{ 'Rules' | t }}</h2>
+                                <div class="vbody">
+                                    {{ content.field_rules }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {#Facilities#}
+                {% if node.field_facilities|length > 0 %}
+                    <div class="ui items content row-with-icon">
+                        <div class="item">
+                            <div class="row-icon facilities-icon"></div>
+                            <div class="content pl10">
+                                <h2 class="title no-line-under">{{ 'Facilities' | t }}</h2>
+                                <div class="vbody">
+                                    {{ content.field_facilities }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% if g is odd %}
+            </div>
+            {% endif %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Description Map#}
+        {% if g is odd %}
+        <div class="gray">
+        {% endif %}
+            <div class="content np">
+                {% if content.field_how_to_go|render is not empty %}
+                    <div class="description div2 content-padding">
+                        <h1 class="title no-line-under">
+                            {{ 'How to go?' | t }}
+                        </h1>
+                        <ul class="content-padding">
+                            {{ content.field_how_to_go }}
+                        </ul>
+                    </div>
+                    {% set map_class = 'div2 ' %}
+                {% else %}
+                    {% set map_class = 'div1 ' %}
+                {% endif %}
+
+
+                {% include directory ~ '/templates/twigTemplates/map.html.twig' with {
+                'class' : map_class
+                } %}
+            </div>
+        {% if g is odd %}
+        </div>
+        {% endif %}
+        {% if node.field_how_to_go|length > 0 or content.field_map|render is not empty %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Destinations#}
+        {% if destinations['#rows'] is not empty %}
+            {% include directory ~ '/templates/twigTemplates/view.full.teaser.small.html.twig' with {
+            view : destinations,
+            title : 'Destinations',
+            gray : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Author#}
+        {% if node.field_author|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/body.html.twig' with {
+            'nobody' : true,
+            'body' : content.field_author,
+            'gray' : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Related#}
+        {% if node.field_related.getValue|length > 0 %}
+            {% include directory ~ '/templates/twigTemplates/related.html.twig' with {
+            'gray' : g
+            } %}
+            {% set g = g + 1 %}
+        {% endif %}
+
+        {#Comments#}
+        {% if node.comment|length > 0 %}
+            <div id="comments-container">
+                {{ content.comment }}
+            </div>
+        {% endif %}
+    </div>
+
+    {#Hidden Inputs#}
+    <input type="hidden" id="photographer" value="{{ content.field_photographer[0]['#plain_text'] }}">
+
+</article>

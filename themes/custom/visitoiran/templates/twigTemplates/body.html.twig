@@ -1,0 +1,53 @@
+{% if block('body') is not empty or body|raw is not empty %}
+    {% if gray is odd %}
+        <div class="gray {{ gray_class }}">
+    {% endif %}
+
+    {% if text_align == 'auto' %}
+        {% set align = 'no-line-under' %}
+    {% else %}
+        {% set align = 'tac' %}
+    {% endif %}
+
+    <div
+        {% if id %}
+        id= {{ id }}
+        {% endif %}
+        {{ attr }}
+        class="content {{ content_class }}">
+        {% if show_title %}
+            <h1 class="title {{ align }} {{ title_class }}">
+                {% if icon_name %}
+                    <i class="{{ icon_name }}"></i>
+                {% endif %}
+                {% if title_name %}
+                    {{ title_name | t }}
+                {% endif %}
+                {% if title_value %}
+                    {{ title_value }}
+                {% endif %}
+            </h1>
+            {% if title_link|length > 0 %}
+                <div class="tac"><a class="see-all" href="{{ title_link['#url_title'] }}">{{ title_link['#title'] | t }}</a></div>
+            {% endif %}
+        {% endif %}
+    {% if not nobody %}
+        {% if readmore_class is empty %}
+            {% set readmore_class = 'readmore' %}
+        {% endif %}
+        {% set text_class = 'vbody ' ~ readmore_class %}
+    {% endif %}
+        <div class="{{ text_class }} {{ body_class }}">
+            {% autoescape %}
+                {% if body %}
+                    {{ body|raw }}
+                {% endif %}
+                {% block body %}{% endblock %}
+            {% endautoescape %}
+        </div>
+    </div>
+
+    {% if gray is odd %}
+        </div>
+    {% endif %}
+{% endif %}
